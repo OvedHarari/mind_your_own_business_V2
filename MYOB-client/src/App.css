@@ -1,0 +1,100 @@
+:root {
+  --color-primary: #ededed;
+  --color-secondary: #c2caca88;
+  --color-modal: #ededed;
+  --color-title: #212529; 
+}
+
+.dark {
+  --color-primary: #212529;
+  --color-secondary: #586573;
+  --color-modal: #414952;
+  --color-title: #bfd0e6;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--color-primary);
+  color: var(--color-title);
+  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+  font-family: "Signika Negative", sans-serif;
+}
+
+.signup,
+.signin {
+  background-color: var(--color-primary);
+  color: var(--color-title);
+}
+
+.set-modal .modal-content,
+form {
+  background-color: var(--color-modal);
+  color: var(--color-title);
+  .form-control,
+  .form-select {
+    background-color: var(--color-modal);
+    color: var(--color-title);
+  }
+  .form-control:not(:placeholder-shown)~label::after,
+  .form-control~label::after {
+    background-color: var(--color-secondary);
+  }
+  .form-control:not(:placeholder-shown)~label,
+  .form-control:placeholder-shown~label {
+    color: var(--color-title);
+  }
+  .form-select:not(:placeholder-shown)~label::after,
+  .form-select~label::after {
+    background-color: var(--color-secondary);
+  }
+  .form-select:not(:placeholder-shown)~label,
+  .form-select:placeholder-shown~label {
+    color: var(--color-title);
+  }
+}
+
+.card {
+  background-color: var(--color-secondary);
+  color: var(--color-title);
+}
+
+.cardImgDiv {
+  overflow: hidden;
+  .cardImg {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    &&:hover {
+      -webkit-transform: scale(1.3);
+      transform: scale(1.3);
+    }
+  }
+}
+
+.cardIcons {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}
+
+.passIcon {
+  position: absolute;
+  right: 10px;
+  bottom: 4px;
+  top: 12px;
+}
+
+.profileImg {
+  cursor: pointer;
+  &&:hover {
+    opacity: 0.3;
+  }
+}
+
+.map-container {
+  width: 100%;
+  height: 350px;
+}
