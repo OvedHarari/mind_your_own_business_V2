@@ -10,7 +10,7 @@ import PageNotFound from "./components/PageNotFound";
 import UsersManagement from "./components/UsersManagement";
 import MyCards from "./components/MyCards";
 import Favorites from "./components/Favorites";
-import { getUserById, getUserProfile } from "./services/usersService";
+import { getUserById } from "./services/usersService";
 import About from "./components/About";
 
 const theme = {

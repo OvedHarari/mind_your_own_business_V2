@@ -56,7 +56,7 @@ const UserProfileModal: FunctionComponent<UserProfileModalProps> = ({ show, onHi
               User Profile</Modal.Title>
           </div>
           <div className="col-3 w-100 text-end ">
-            <Button variant="secondary" onClick={() => setEditForm(false)}>
+            <Button variant={editForm ? "success" : "secondary"} onClick={() => setEditForm(false)}>
               Edit Profile <i className="fa-solid fa-pen-to-square"></i>
             </Button>
           </div>

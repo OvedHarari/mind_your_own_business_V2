@@ -131,9 +131,9 @@ const MyCards: FunctionComponent<MyCardsProps> = ({ userInfo }) => {
                     }} />
                 </div>
                 <div className="card-body">
-                  <h6 className="card-subtitle mb-2 text-muted">
+                  <h4 className="card-subtitle mb-2 text-muted">
                     {card.title}
-                  </h6>
+                  </h4>
                   <h5 className="card-title">{card.subtitle}</h5>
                   <p className="card-text mb-4">{card.description}</p>
                   <div className="cardIcons">

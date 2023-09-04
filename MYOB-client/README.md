@@ -9,10 +9,10 @@ Users can Sign up to platform as casual users or business users and an Admin use
 
 ### Users for testing:
 
-1. Casual user - casual1@test.com , password- 12345678
-2. Business user - business1@test.com , password- 12345678
-3. Casual user - admin1@test.com , password- 12345678
-4. Blocked user - blocked1@test.com , password- 12345678
+1. Casual user - casual1@test.com , password- 1q@W#E$R
+2. Business user - business1@test.com , password- 1q@W#E$R
+3. Casual user - admin1@test.com , password- 1q@W#E$R
+4. Blocked user - blocked1@test.com , password- 1q@W#E$R
 
 ### Basic functionality:
 
