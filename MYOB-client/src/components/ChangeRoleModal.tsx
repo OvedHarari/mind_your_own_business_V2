@@ -2,7 +2,7 @@ import { FunctionComponent, useContext, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { successMsg } from "../services/feedbacksService";
 import { SiteTheme } from "../App";
-import { changeUserRole } from "../services/usersService";
+import { updateUserProps } from "../services/usersService";
 
 interface ChangeRoleModalProps {
   show: boolean;
@@ -39,6 +39,7 @@ const ChangeRoleModal: FunctionComponent<ChangeRoleModalProps> = ({
         <Modal.Body>
           <select className="form-select form-select-sm" style={{ width: "10rem" }} aria-label="Small select example" value={selectedRole}
             onChange={handleRoleChange} >
+            <option defaultValue="true">Select New Role</option>
             <option value="casual">Casual</option>
             <option value="business">Business</option>
             <option value="admin">Admin</option>
@@ -48,7 +49,7 @@ const ChangeRoleModal: FunctionComponent<ChangeRoleModalProps> = ({
           <Button
             variant="danger"
             onClick={() =>
-              changeUserRole(userProfile.id, selectedRole as string)
+              updateUserProps(userProfile._id, "role", selectedRole)
                 .then((res) => {
                   render();
                   onHide();

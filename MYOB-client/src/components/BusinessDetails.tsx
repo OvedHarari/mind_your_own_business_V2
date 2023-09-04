@@ -6,7 +6,7 @@ import BusinessMap from "./BusinessMap";
 
 interface BusinessDetailsProps {
     onHide: Function
-    cardId: number;
+    cardId: string;
 }
 
 const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, cardId }) => {
@@ -26,7 +26,7 @@ const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, card
                     {card.description}
                 </div>
                 <div className="col-lg-4 text-end">
-                    <img src={card.businessImgURL} width={300} height={300} alt={card.businessImgAlt} />
+                    <img src={card.businessImage.url} width={300} height={300} alt={card.businessImage.alt} />
                 </div>
             </div>
             <div className="row mt-4">
@@ -36,10 +36,10 @@ const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, card
                     <p>Phone: <Link to="">{card.phone}</Link> </p>
                     <p>Website: <Link to="">{card.webSite}</Link></p>
                     <p>Contact Email: <Link to="">{card.email}</Link></p>
-                    <p>Located At: <br /> {card.street} {card.houseNumber}, {card.city}, {card.country}, {card.zipcode} {card.state} </p>
+                    <p>Located At: <br /> {card.address.street} {card.address.houseNumber}, {card.address.city}, {card.address.country}, {card.address.zipcode} {card.address.state} </p>
                 </div>
                 <div className="col-lg-6">
-                    <BusinessMap lat={card.lat as number} lng={card.lng as number} />
+                    <BusinessMap lat={card.address.lat as number} lng={card.address.lng as number} />
                 </div>
             </div>
             <button className="btn btn-secondary mt-2" onClick={() => onHide()}>Close</button>

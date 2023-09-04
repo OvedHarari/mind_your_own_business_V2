@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SiteTheme } from "../App";
 import { successMsg } from "../services/feedbacksService";
 import UserProfileModal from "./UserProfileModal";
-import { getUserByEmail } from "../services/usersService";
+import { getUserProfile } from "../services/usersService";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -31,9 +31,10 @@ const Navbar: FunctionComponent<NavbarProps> = ({
   let theme = useContext(SiteTheme);
   let [userProfileModal, setOpenUserProfileModal] = useState<boolean>(false)
   let navigate = useNavigate();
-  let updateUserProfile = (userEmail: string) => getUserByEmail(userEmail).then((res) => { setUserProfile(res.data[0]); }).catch((err) => console.log(err))
+  let updateUserProfile = () => getUserProfile().then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
   let signOut = () => {
     sessionStorage.removeItem("userInfo");
+    sessionStorage.removeItem("token");
     setUserInfo({ email: false, role: false });
     navigate("/");
     successMsg("See you soon 😉");
@@ -125,7 +126,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
                       alt="user profile"
                       onClick={() => {
                         setOpenUserProfileModal(true)
-                        updateUserProfile(userInfo.email)
+                        updateUserProfile()
                       }}></img>
                   </>
                 )}

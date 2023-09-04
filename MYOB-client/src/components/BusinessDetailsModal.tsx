@@ -7,7 +7,7 @@ import BusinessDetails from "./BusinessDetails";
 interface BusinessDetailsModalProps {
   show: boolean;
   onHide: Function;
-  cardId: number;
+  cardId: string;
   cardTitle: string;
 }
 const BusinessDetailsModal: FunctionComponent<BusinessDetailsModalProps> = ({ show, onHide, cardId, cardTitle }) => {

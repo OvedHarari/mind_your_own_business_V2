@@ -10,7 +10,7 @@ import PageNotFound from "./components/PageNotFound";
 import UsersManagement from "./components/UsersManagement";
 import MyCards from "./components/MyCards";
 import Favorites from "./components/Favorites";
-import { getUserByEmail } from "./services/usersService";
+import { getUserById, getUserProfile } from "./services/usersService";
 import About from "./components/About";
 
 const theme = {
@@ -48,28 +48,21 @@ function App() {
   );
   let [userInfo, setUserInfo] = useState(
     JSON.parse(sessionStorage.getItem("userInfo") as string) == null
-      ? { email: false, isAdmin: false }
+      ? { email: false }
       : JSON.parse(sessionStorage.getItem("userInfo") as string)
   );
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated)
   let [userProfile, setUserProfile] = useState<any>({
-    id: 0,
-    firstName: "",
-    middleName: "",
-    lastName: "",
+    _id: 0,
+    name: { firstName: "", middleName: "", lastName: "" },
     phone: "",
     email: "",
     password: "",
-    userImgURL: "",
+    image: { url: "", alt: "" },
     gender: "",
     role: "",
-    country: "",
-    state: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zipcode: "",
+    address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "" },
     isActive: ""
   })
   let [passwordShown, setPasswordShown] = useState(false);
@@ -78,10 +71,21 @@ function App() {
   };
 
   useEffect(() => {
-    getUserByEmail(userInfo.email).then((res) => {
-      setUserProfile(res.data[0]);
+    if (userInfo.userId) (getUserById(userInfo.userId).then((res) => {
+      setUserProfile(res.data);
+
     }).catch((err) => console.log(err))
-  }, [userInfo.email, dataUpdated]);
+    )
+    // if (userInfo._id) (getUserProfile().then((res) => {
+    //   setUserProfile(res.data);
+    //   console.log(res);
+
+    // }).catch((err) => console.log(err))
+    // )
+
+    // let updateUserProfile = (userId: string) => getUserById(userId).then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
+
+  }, [dataUpdated, userInfo]);
   return (
     <SiteTheme.Provider value={darkMode ? theme.dark : theme.light}>
       <ToastContainer theme={`${darkMode ? "dark" : "light"}`} />

@@ -9,7 +9,7 @@ import { SiteTheme } from "../App";
 interface UpdateCardProps {
   onHide: Function;
   render: Function;
-  cardId: number;
+  cardId: string;
   cardTitle: string;
 }
 
@@ -23,35 +23,40 @@ const UpdateCard: FunctionComponent<UpdateCardProps> = ({ onHide, render, cardId
       phone: "",
       email: "",
       webSite: "",
-      businessImgURL: "",
-      businessImgAlt: "",
-      country: "",
-      state: "",
-      city: "",
-      street: "",
-      houseNumber: "",
-      zipcode: "",
+      businessImage: {
+        url: "",
+        alt: "",
+      },
+      address: {
+        country: "",
+        state: "",
+        city: "",
+        street: "",
+        houseNumber: "",
+        zipcode: ""
+      },
+
     })
   let formik = useFormik({
     initialValues: {
-      title: card.title, subtitle: card.subtitle, description: card.description, phone: card.phone, email: card.email, webSite: card.webSite, businessImgURL: card.businessImgURL, businessImgAlt: card.businessImgAlt,
-      country: card.country, state: card.state, city: card.city, street: card.street, houseNumber: card.houseNumber, zipcode: card.zipcode, owner: card.owner
+      title: card.title, subtitle: card.subtitle, description: card.description, phone: card.phone, email: card.email, webSite: card.webSite, businessImage: ({ url: card.businessImage.url, alt: card.businessImage.alt }),
+      address: ({ country: card.address.country, state: card.address.state, city: card.address.city, street: card.address.street, houseNumber: card.address.houseNumber, zipcode: card.address.zipcode }), owner: card.owner
     },
     validationSchema: yup.object({
       title: yup.string().required().min(2), subtitle: yup.string().required().min(2), description: yup.string().required().min(20),
-      phone: yup.string().required().min(2), email: yup.string().required().email(), webSite: yup.string().min(10), businessImgURL: yup.string().min(2), businessImgAlt: yup.string().min(2), country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2),
+      phone: yup.string().required().min(2), email: yup.string().required().email(), webSite: yup.string().min(10), businessImage: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2) }),
     }),
     enableReinitialize: true,
     onSubmit(values: Card) {
       try {
         const geocoder = new google.maps.Geocoder();
-        const place = `${values.country} ${values.city} ${values.street} ${values.houseNumber}`;
+        const place = `${values.address.country} ${values.address.city} ${values.address.street} ${values.address.houseNumber}`;
         geocoder.geocode({ address: place }, (results: any, status: any) => {
           if (status === "OK" && results![0]) {
             const location = results![0].geometry.location;
             const lat = (location.lat());
             const lng = (location.lng());
-            updateCard({ ...values, lat: lat, lng: lng }, cardId)
+            updateCard({ ...values, address: { ...values.address, lat: lat, lng: lng } }, cardId)
               .then((res) => {
                 render();
                 onHide();
@@ -144,88 +149,88 @@ const UpdateCard: FunctionComponent<UpdateCardProps> = ({ onHide, render, cardId
         <div className="form-floating col-6 mb-3 mt-3">
           <input
             type="text" className="form-control border-secondary" id="floatingBusinessImgURL" placeholder="Business Image"
-            name="businessImgURL"
+            name="businessImage.url"
             onChange={formik.handleChange}
-            value={formik.values.businessImgURL}
+            value={formik.values.businessImage.url}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingBusinessImgURL">Business Image URL</label>
-          {formik.touched.businessImgURL && formik.errors.businessImgURL && (
-            <p className="text-danger">{formik.errors.businessImgURL}</p>)}
+          {formik.touched.businessImage?.url && formik.errors.businessImage?.url && (
+            <p className="text-danger">{formik.errors.businessImage.url}</p>)}
         </div>
         <div className="form-floating col-6 mb-3 mt-3">
           <input
             type="text" className="form-control border-secondary" id="floatingBusinessImgAlt" placeholder="Business Image alternative name"
-            name="businessImgAlt"
+            name="businessImage.alt"
             onChange={formik.handleChange}
-            value={formik.values.businessImgAlt}
+            value={formik.values.businessImage.alt}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingBusinessImgAlt">Image alternative name</label>
-          {formik.touched.businessImgAlt && formik.errors.businessImgAlt && (
-            <p className="text-danger">{formik.errors.businessImgAlt}</p>)}
+          {formik.touched.businessImage?.alt && formik.errors.businessImage?.alt && (
+            <p className="text-danger">{formik.errors.businessImage.alt}</p>)}
         </div>
       </div>
       <h6 className="mt-4">Address</h6>
       <div className="row g-2 border rounded-4 border-secondary mt-1">
         <div className="form-floating col-6 mb-3 mt-3">
           <input type="text" className="form-control border-secondary" id="floatingState" placeholder="State"
-            name="state"
+            name="address.state"
             onChange={formik.handleChange}
-            value={formik.values.state}
+            value={formik.values.address.state}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingState">State</label>
-          {formik.touched.state && formik.errors.state && (
-            <p className="text-danger">{formik.errors.state}</p>)}
+          {formik.touched.address?.state && formik.errors.address?.state && (
+            <p className="text-danger">{formik.errors.address.state}</p>)}
         </div>
         <div className="form-floating col-6 mb-3 mt-3">
           <input type="text" className="form-control border-secondary" id="floatingCountry" placeholder="Country"
-            name="country"
+            name="address.country"
             onChange={formik.handleChange}
-            value={formik.values.country}
+            value={formik.values.address.country}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingCountry">Country *</label>
-          {formik.touched.country && formik.errors.country && (
-            <p className="text-danger">{formik.errors.country}</p>)}
+          {formik.touched.address?.country && formik.errors.address?.country && (
+            <p className="text-danger">{formik.errors.address.country}</p>)}
         </div>
         <div className="form-floating col-6 mb-3">
           <input type="text" className="form-control border-secondary" id="floatingCity" placeholder="City"
-            name="city"
+            name="address.city"
             onChange={formik.handleChange}
-            value={formik.values.city}
+            value={formik.values.address.city}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingCity">City *</label>
-          {formik.touched.city && formik.errors.city && (
-            <p className="text-danger">{formik.errors.city}</p>)}
+          {formik.touched.address?.city && formik.errors.address?.city && (
+            <p className="text-danger">{formik.errors.address.city}</p>)}
         </div>
         <div className="form-floating col-6 mb-3">
           <input type="text" className="form-control border-secondary" id="floatingStreet" placeholder="Street"
-            name="street"
+            name="address.street"
             onChange={formik.handleChange}
-            value={formik.values.street}
+            value={formik.values.address.street}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingStreet">Street *</label>
-          {formik.touched.street && formik.errors.street && (
-            <p className="text-danger">{formik.errors.street}</p>)}
+          {formik.touched.address?.street && formik.errors.address?.street && (
+            <p className="text-danger">{formik.errors.address.street}</p>)}
         </div>
         <div className="form-floating col-6 mb-3">
           <input
             type="text" className="form-control border-secondary" id="floatingHouseNumber" placeholder="House Number"
-            name="houseNumber"
+            name="address.houseNumber"
             onChange={formik.handleChange}
-            value={formik.values.houseNumber}
+            value={formik.values.address.houseNumber}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingHouseNumber">House Number *</label>
-          {formik.touched.houseNumber && formik.errors.houseNumber && (
-            <p className="text-danger">{formik.errors.houseNumber}</p>)}
+          {formik.touched.address?.houseNumber && formik.errors.address?.houseNumber && (
+            <p className="text-danger">{formik.errors.address.houseNumber}</p>)}
         </div>
         <div className="form-floating col-6 mb-3">
           <input type="text" className="form-control border-secondary" id="floatingZipCode" placeholder="Zip Code"
-            name="zipcode"
+            name="address.zipcode"
             onChange={formik.handleChange}
-            value={formik.values.zipcode}
+            value={formik.values.address.zipcode}
             onBlur={formik.handleBlur} ></input>
           <label htmlFor="floatingZipCode">Zip Code *</label>
-          {formik.touched.zipcode && formik.errors.zipcode && (
-            <p className="text-danger">{formik.errors.zipcode}</p>)}
+          {formik.touched.address?.zipcode && formik.errors.address?.zipcode && (
+            <p className="text-danger">{formik.errors.address.zipcode}</p>)}
         </div>
       </div>
       <button className="btn btn-secondary w-100 mt-3" type="submit">Update Card</button>

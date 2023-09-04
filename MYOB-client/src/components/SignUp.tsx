@@ -2,10 +2,10 @@ import { useFormik } from "formik";
 import { FunctionComponent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { addUser, getAllUsers } from "../services/usersService";
+import { addUser, getTokenDetailes } from "../services/usersService";
 import { errorMsg, successMsg } from "../services/feedbacksService";
 import User from "../interfaces/User";
-import { createFavoritsById } from "../services/favoritesService";
+// import { createFavoritsById } from "../services/favoritesService";
 
 interface SignUpProps {
   setUserInfo: Function;
@@ -14,37 +14,47 @@ interface SignUpProps {
 }
 const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, togglePassword }) => {
   let navigate = useNavigate();
-  const checkEmail = (serverUsers: any, formData: any) => {
-    const user = serverUsers.find((user: { email: any; }) => user.email === formData.email);
-    if (user) return user;
-  };
 
   let formik = useFormik({
     initialValues: {
-      firstName: "", middleName: "", lastName: "", phone: "", email: "", password: "", gender: "", userImgURL: "",
-      country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "",
+      name: { firstName: "", middleName: "", lastName: "", }, phone: "", email: "", password: "", gender: "", image: { url: "", alt: "" },
+      address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "", },
       role: "casual", isActive: true
     },
+    // initialValues: {
+    //   firstName: "", middleName: "", lastName: "", phone: "", email: "", password: "", gender: "", userImgURL: "",
+    //   country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "",
+    //   role: "casual", isActive: true
+    // },
     validationSchema: yup.object({
-      firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2),
-      phone: yup.string().required().min(2), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), userImgURL: yup.string().min(2), country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2), role: yup.string().min(2),
+      name: yup.object({ firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2) }),
+      phone: yup.string().required().min(2), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), image: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(0), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2), }), role: yup.string().min(2),
     }),
     onSubmit: async (values: User) => {
-
-      const user = await getAllUsers().then((res) => checkEmail(res.data, values)).catch((err) => console.log((err))
-      );
-      if (user) errorMsg("The email you are trying to signup is ALREADY SIGNED UP!!")
-      else {
-        addUser(values)
-          .then((res) => {
-            navigate("/");
-            sessionStorage.setItem("userInfo", JSON.stringify({ email: res.data.email, userId: res.data.id, role: res.data.role, gender: res.data.gender }));
-            setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
-            createFavoritsById(res.data.id)
-            successMsg(`${values.email} was registered and logged in`);
-          })
-          .catch((err) => console.log(err));
-      }
+      addUser(values)
+        .then((res) => {
+          navigate("/");
+          sessionStorage.setItem("token", JSON.stringify({
+            token: res.data
+          }))
+          sessionStorage.setItem("userInfo", JSON.stringify({
+            email: (getTokenDetailes() as any).email,
+            userId: (getTokenDetailes() as any)._id,
+            role: (getTokenDetailes() as any).role,
+            gender: (getTokenDetailes() as any).gender
+          }))
+          setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
+          // createFavoritsById(res.data.id)
+          successMsg(`${values.email} was registered and logged in`);
+        })
+        .catch((err) => {
+          if (err.response.data === "User already exist") {
+            errorMsg(`${values.email} ${err.response.data}`);
+            console.log(err)
+          }
+          else
+            console.log(err)
+        });
     },
   });
 
@@ -56,33 +66,33 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
         <div className="row g-2 border rounded-4 border-secondary mt-1">
           <div className="form-floating col-6 mb-3 mt-3">
             <input type="text" className="form-control border-secondary " id="floatingFirstName" placeholder="First Name"
-              name="firstName"
+              name="name.firstName"
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.name.firstName}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingFirstName">First Name *</label>
-            {formik.touched.firstName && formik.errors.firstName && (
-              <p className="text-danger">{formik.errors.firstName}</p>)}
+            {formik.touched.name?.firstName && formik.errors.name?.firstName && (
+              <p className="text-danger">{formik.errors.name.firstName}</p>)}
           </div>
           <div className="form-floating col-6 mb-3 mt-3">
             <input type="text" className="form-control border-secondary" id="floatingMiddleName" placeholder="Middle Name"
-              name="middleName"
+              name="name.middleName"
               onChange={formik.handleChange}
-              value={formik.values.middleName}
+              value={formik.values.name.middleName}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingmiddleName">Middle Name</label>
-            {formik.touched.middleName && formik.errors.middleName && (
-              <p className="text-danger">{formik.errors.middleName}</p>)}
+            {formik.touched.name?.middleName && formik.errors.name?.middleName && (
+              <p className="text-danger">{formik.errors.name.middleName}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input type="text" className="form-control border-secondary" id="floatingLastName" placeholder="Last Name"
-              name="lastName"
+              name="name.lastName"
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.name.lastName}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingLastName">Last Name *</label>
-            {formik.touched.lastName && formik.errors.lastName && (
-              <p className="text-danger">{formik.errors.lastName}</p>)}
+            {formik.touched.name?.lastName && formik.errors.name?.lastName && (
+              <p className="text-danger">{formik.errors.name.lastName}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input type="text" className="form-control border-secondary" id="floatingPhone" placeholder="Phone Number"
@@ -138,72 +148,72 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
           <div className="form-floating col-6 mb-3 mt-3">
             <input
               type="text" className="form-control border-secondary" id="floatingUserImgURL" placeholder="User Image URL"
-              name="userImgURL"
+              name="image.url"
               onChange={formik.handleChange}
-              value={formik.values.userImgURL}
+              value={formik.values.image.url}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingUserImgURL">User Image URL</label>
-            {formik.touched.userImgURL && formik.errors.userImgURL && (<p className="text-danger">{formik.errors.userImgURL}</p>)}
+            {formik.touched.image?.url && formik.errors.image?.url && (<p className="text-danger">{formik.errors.image.url}</p>)}
           </div>
         </div>
         <h6 className="mt-4 text-start">Address</h6>
         <div className="row g-2 border rounded-4 border-secondary mt-1">
           <div className="form-floating col-6 mb-3 mt-3">
             <input type="text" className="form-control border-secondary" id="floatingState" placeholder="State"
-              name="state"
+              name="address.state"
               onChange={formik.handleChange}
-              value={formik.values.state}
+              value={formik.values.address.state}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingState">State</label>
-            {formik.touched.state && formik.errors.state && (<p className="text-danger">{formik.errors.state}</p>)}
+            {formik.touched.address?.state && formik.errors.address?.state && (<p className="text-danger">{formik.errors.address.state}</p>)}
           </div>
           <div className="form-floating col-6 mb-3 mt-3">
             <input type="text" className="form-control border-secondary" id="floatingCountry" placeholder="Country"
-              name="country"
+              name="address.country"
               onChange={formik.handleChange}
-              value={formik.values.country}
+              value={formik.values.address.country}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingCountry">Country *</label>
-            {formik.touched.country && formik.errors.country && (<p className="text-danger">{formik.errors.country}</p>)}
+            {formik.touched.address?.country && formik.errors.address?.country && (<p className="text-danger">{formik.errors.address.country}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input type="text" className="form-control border-secondary" id="floatingCity" placeholder="City"
-              name="city"
+              name="address.city"
               onChange={formik.handleChange}
-              value={formik.values.city}
+              value={formik.values.address.city}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingCity">City *</label>
-            {formik.touched.city && formik.errors.city && (<p className="text-danger">{formik.errors.city}</p>)}
+            {formik.touched.address?.city && formik.errors.address?.city && (<p className="text-danger">{formik.errors.address.city}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input type="text" className="form-control border-secondary" id="floatingStreet" placeholder="Street"
-              name="street"
+              name="address.street"
               onChange={formik.handleChange}
-              value={formik.values.street}
+              value={formik.values.address.street}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingStreet">Street *</label>
-            {formik.touched.street && formik.errors.street && (<p className="text-danger">{formik.errors.street}</p>)}
+            {formik.touched.address?.street && formik.errors.address?.street && (<p className="text-danger">{formik.errors.address.street}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input
               type="text" className="form-control border-secondary" id="floatingHouseNumber" placeholder="House Number"
-              name="houseNumber"
+              name="address.houseNumber"
               onChange={formik.handleChange}
-              value={formik.values.houseNumber}
+              value={formik.values.address.houseNumber}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingHouseNumber">House Number *</label>
-            {formik.touched.houseNumber && formik.errors.houseNumber && (<p className="text-danger">{formik.errors.houseNumber}</p>)}
+            {formik.touched.address?.houseNumber && formik.errors.address?.houseNumber && (<p className="text-danger">{formik.errors.address.houseNumber}</p>)}
           </div>
           <div className="form-floating col-6 mb-3">
             <input
               type="text"
               className="form-control border-secondary" id="floatingZipCode" placeholder="Zip code"
-              name="zipcode"
+              name="address.zipcode"
               onChange={formik.handleChange}
-              value={formik.values.zipcode}
+              value={formik.values.address.zipcode}
               onBlur={formik.handleBlur} ></input>
             <label htmlFor="floatingZipCode">Zip Code *</label>
-            {formik.touched.zipcode && formik.errors.zipcode && (<p className="text-danger">{formik.errors.zipcode}</p>)}
+            {formik.touched.address?.zipcode && formik.errors.address?.zipcode && (<p className="text-danger">{formik.errors.address.zipcode}</p>)}
           </div>
           <div className="form-check ms-3 text-start fw-bold">
             <input className="form-check-input" type="checkbox" id="roleCheckbox" name="role"

@@ -7,7 +7,7 @@ import { SiteTheme } from "../App";
 interface DeleteCardModalProps {
   show: boolean;
   onHide: Function;
-  cardId: number;
+  cardId: string;
   render: Function;
   cardTitle: string;
 }
@@ -22,7 +22,7 @@ const DeleteCardModal: FunctionComponent<DeleteCardModalProps> = ({
   return (
     <>
       <Modal
-      className={`${theme} set-modal`} 
+        className={`${theme} set-modal`}
         show={show}
         onHide={() => onHide()}
         size="sm"
@@ -43,7 +43,8 @@ const DeleteCardModal: FunctionComponent<DeleteCardModalProps> = ({
                 .then((res) => {
                   render();
                   onHide();
-                  successMsg(`${cardTitle} business card was deleted successfully!`); })
+                  successMsg(`${cardTitle} business card was deleted successfully!`);
+                })
                 .catch((err) => console.log(err))
             } >Yes</Button>
           <Button variant="secondary" onClick={() => onHide()}>

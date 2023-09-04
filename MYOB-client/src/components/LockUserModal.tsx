@@ -2,7 +2,7 @@ import { FunctionComponent, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { successMsg } from "../services/feedbacksService";
 import { SiteTheme } from "../App";
-import { activateUser } from "../services/usersService";
+import { updateUserProps } from "../services/usersService";
 
 interface LockUserModalProps {
   show: boolean;
@@ -42,7 +42,7 @@ const LockUserModal: FunctionComponent<LockUserModalProps> = ({
           <Button
             variant="danger"
             onClick={() =>
-              activateUser(userProfile.id, !isActive)
+              updateUserProps(userProfile._id, "isActive", !isActive)
                 .then((res) => {
                   render();
                   onHide();

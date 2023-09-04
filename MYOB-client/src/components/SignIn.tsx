@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { FunctionComponent } from "react";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { userValidation } from "../services/usersService";
+import { getTokenDetailes, userValidation } from "../services/usersService";
 import { errorMsg, successMsg } from "../services/feedbacksService";
 
 interface SignInProps {
@@ -22,22 +22,27 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
     onSubmit: (values) => {
       userValidation(values)
         .then((res) => {
-          if (res.data.length) {
-            if (res.data[0].isActive) {
-              sessionStorage.setItem("userInfo", JSON.stringify({
-                email: values.email, userId: res.data[0].id, role: res.data[0].role, gender: res.data[0].gender
-              }));
-              setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
-              successMsg(`You're signed in as ${values.email}`);
-              navigate("/");
-            } else {
-              errorMsg("Your User was blocked, please contact System Administrator");
-            }
-          } else {
-            errorMsg("Wrong Email or Password");
-          }
+          sessionStorage.setItem("token", JSON.stringify({
+            token: res.data
+          }))
+          sessionStorage.setItem("userInfo", JSON.stringify({
+            email: (getTokenDetailes() as any).email,
+            userId: (getTokenDetailes() as any)._id,
+            role: (getTokenDetailes() as any).role,
+            gender: (getTokenDetailes() as any).gender
+          }))
+          setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
+          successMsg(`You're signed in as ${values.email}`);
+          navigate("/");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.response.data === "Your User was blocked, please contact System Administrator") {
+            errorMsg(err.response.data);
+            console.log(err)
+          }
+          else
+            console.log(err)
+        });
     },
   });
 

@@ -19,15 +19,19 @@ interface UserProfileProps {
 const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile, editForm, setEditForm, render, togglePassword, passwordShown }) => {
   let formik = useFormik({
     initialValues: {
-      firstName: userProfile.firstName, middleName: userProfile.middleName, lastName: userProfile.lastName, phone: userProfile.phone, email: userProfile.email, password: userProfile.password, gender: userProfile.gender, userImgURL: userProfile.userImgURL, country: userProfile.country, state: userProfile.state, city: userProfile.city, street: userProfile.street, houseNumber: userProfile.houseNumber, zipcode: userProfile.zipcode, role: userProfile.role, isActive: userProfile.isActive
+      name: { firstName: userProfile.name.firstName, middleName: userProfile.name.middleName, lastName: userProfile.name.lastName }, phone: userProfile.phone, email: userProfile.email,
+      // password: userProfile.password,
+      gender: userProfile.gender, image: { url: userProfile.image.url }, address: { country: userProfile.address.country, state: userProfile.address.state, city: userProfile.address.city, street: userProfile.address.street, houseNumber: userProfile.address.houseNumber, zipcode: userProfile.address.zipcode }, role: userProfile.role, isActive: userProfile.isActive
     },
     validationSchema: yup.object({
-      firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2),
-      phone: yup.string().required().min(2), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), userImgURL: yup.string().min(2), country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(2), zipcode: yup.string().min(2), role: yup.string().min(2)
+      name: yup.object({ firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2) }),
+      phone: yup.string().required().min(2), email: yup.string().required().email(),
+      // password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"),
+      gender: yup.string().required(), image: yup.object({ url: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(2), zipcode: yup.string().min(2) }), role: yup.string().min(2)
     }),
     enableReinitialize: true,
     onSubmit(values: User) {
-      updateUser(values, userProfile.id)
+      updateUser(values, userProfile._id)
         .then((res) => {
           setEditForm(true)
           onHide();
@@ -47,31 +51,31 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
           <div className="row g-2 border rounded-4 border-secondary mt-1">
             <div className="form-floating col-6 mb-3 mt-3">
               <input type="text" className="form-control border-secondary " id="floatingFirstName" placeholder="First Nane"
-                name="firstName"
+                name="name.firstName"
                 onChange={formik.handleChange}
-                value={formik.values.firstName}
+                value={formik.values.name.firstName}
                 onBlur={formik.handleBlur}
                 disabled={editForm} ></input>
               <label htmlFor="floatingFirstName">First Name *</label>
-              {formik.touched.firstName && formik.errors.firstName && (<p className="text-danger">{formik.errors.firstName}</p>)}
+              {formik.touched.name?.firstName && formik.errors.name?.firstName && (<p className="text-danger">{formik.errors.name.firstName}</p>)}
             </div>
             <div className="form-floating col-6 mb-3 mt-3">
               <input type="text" className="form-control border-secondary" id="floatingMiddleName" placeholder="Middle Name"
-                name="middleName"
+                name="name.middleName"
                 onChange={formik.handleChange}
-                value={formik.values.middleName}
+                value={formik.values.name.middleName}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingmiddleName">Middle Name</label>
-              {formik.touched.middleName && formik.errors.middleName && (<p className="text-danger">{formik.errors.middleName}</p>)}
+              {formik.touched.name?.middleName && formik.errors.name?.middleName && (<p className="text-danger">{formik.errors.name.middleName}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input type="text" className="form-control border-secondary" id="floatingLastName" placeholder="Last Name"
-                name="lastName"
+                name="name.lastName"
                 onChange={formik.handleChange}
-                value={formik.values.lastName}
+                value={formik.values.name.lastName}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingLastName">Last Name *</label>
-              {formik.touched.lastName && formik.errors.lastName && (<p className="text-danger">{formik.errors.lastName}</p>)}
+              {formik.touched.name?.lastName && formik.errors.name?.lastName && (<p className="text-danger">{formik.errors.name.lastName}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input type="text" className="form-control border-secondary" id="floatingPhone" placeholder="Phone Number"
@@ -91,7 +95,7 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
               <label htmlFor="floatingEmail">Email address *</label>
               {formik.touched.email && formik.errors.email && (<p className="text-danger">{formik.errors.email}</p>)}
             </div>
-            <div className="form-floating col-6">
+            {/* <div className="form-floating col-6">
               <input type={passwordShown ? "text" : "password"} className="form-control border-secondary" id="floatingPassword" placeholder="Password"
                 name="password"
                 onChange={formik.handleChange}
@@ -102,7 +106,7 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
               </div>
               <label htmlFor="floatingPassword">Password *</label>
               {formik.touched.password && formik.errors.password && (<p className="text-danger">{formik.errors.password}</p>)}
-            </div>
+            </div> */}
           </div>
           <h6 className="mt-4 text-start">Gander / Image</h6>
           <div className="row g-2 border rounded-4 border-secondary mt-1">
@@ -124,73 +128,73 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
             <div className="form-floating col-6 mb-3 mt-3">
               <input
                 type="text" className="form-control border-secondary" id="floatingUserImgURL" placeholder="User Image URL"
-                name="userImgURL"
+                name="image.url"
                 onChange={formik.handleChange}
-                value={formik.values.userImgURL}
+                value={formik.values.image.url}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingUserImgURL">User Image URL</label>
-              {formik.touched.userImgURL && formik.errors.userImgURL && (<p className="text-danger">{formik.errors.userImgURL}</p>)}
+              {formik.touched.image?.url && formik.errors.image?.url && (<p className="text-danger">{formik.errors.image.url}</p>)}
             </div>
           </div>
           <h6 className="mt-4 text-start">Address</h6>
           <div className="row g-2 border rounded-4 border-secondary mt-1">
             <div className="form-floating col-6 mb-3 mt-3">
               <input type="text" className="form-control border-secondary" id="floatingState" placeholder="State"
-                name="state"
+                name="address.state"
                 onChange={formik.handleChange}
-                value={formik.values.state}
+                value={formik.values.address.state}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingState">State</label>
-              {formik.touched.state && formik.errors.state && (<p className="text-danger">{formik.errors.state}</p>)}
+              {formik.touched.address?.state && formik.errors.address?.state && (<p className="text-danger">{formik.errors.address.state}</p>)}
             </div>
             <div className="form-floating col-6 mb-3 mt-3">
               <input type="text" className="form-control border-secondary" id="floatingCountry" placeholder="Country"
-                name="country"
+                name="address.country"
                 onChange={formik.handleChange}
-                value={formik.values.country}
+                value={formik.values.address.country}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingCountry">Country *</label>
-              {formik.touched.country && formik.errors.country && (<p className="text-danger">{formik.errors.country}</p>)}
+              {formik.touched.address?.country && formik.errors.address?.country && (<p className="text-danger">{formik.errors.address.country}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input type="text" className="form-control border-secondary" id="floatingCity" placeholder="City"
-                name="city"
+                name="address.city"
                 onChange={formik.handleChange}
-                value={formik.values.city}
+                value={formik.values.address.city}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingCity">City *</label>
-              {formik.touched.city && formik.errors.city && (<p className="text-danger">{formik.errors.city}</p>)}
+              {formik.touched.address?.city && formik.errors.address?.city && (<p className="text-danger">{formik.errors.address.city}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input type="text" className="form-control border-secondary" id="floatingStreet" placeholder="Street"
-                name="street"
+                name="address.street"
                 onChange={formik.handleChange}
-                value={formik.values.street}
+                value={formik.values.address.street}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingStreet">Street *</label>
-              {formik.touched.street && formik.errors.street && (<p className="text-danger">{formik.errors.street}</p>)}
+              {formik.touched.address?.street && formik.errors.address?.street && (<p className="text-danger">{formik.errors.address.street}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input
                 type="text" className="form-control border-secondary" id="floatingHouseNumber" placeholder="House Number"
-                name="houseNumber"
+                name="address.houseNumber"
                 onChange={formik.handleChange}
-                value={formik.values.houseNumber}
+                value={formik.values.address.houseNumber}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingHouseNumber">House Number *</label>
-              {formik.touched.houseNumber && formik.errors.houseNumber && (<p className="text-danger">{formik.errors.houseNumber}</p>)}
+              {formik.touched.address?.houseNumber && formik.errors.address?.houseNumber && (<p className="text-danger">{formik.errors.address.houseNumber}</p>)}
             </div>
             <div className="form-floating col-6 mb-3">
               <input
                 type="text"
                 className="form-control border-secondary" id="floatingZipCode" placeholder="Zip Code"
-                name="zipcode"
+                name="address.zipcode"
                 onChange={formik.handleChange}
-                value={formik.values.zipcode}
+                value={formik.values.address.zipcode}
                 onBlur={formik.handleBlur} disabled={editForm}></input>
               <label htmlFor="floatingZipCode">Zip Code *</label>
-              {formik.touched.zipcode && formik.errors.zipcode && (
-                <p className="text-danger">{formik.errors.zipcode}</p>)}
+              {formik.touched.address?.zipcode && formik.errors.address?.zipcode && (
+                <p className="text-danger">{formik.errors.address.zipcode}</p>)}
             </div>
           </div>
           <button className="btn btn-secondary w-100 mt-3" type="submit">Save Changes</button>

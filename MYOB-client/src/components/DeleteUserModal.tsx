@@ -39,7 +39,7 @@ const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
           <Button
             variant="danger"
             onClick={() =>
-              deleteUserById(userProfile.id)
+              deleteUserById(userProfile._id)
                 .then((res) => {
                   render();
                   onHide();

@@ -20,40 +20,59 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
   let [openDeleteCardModal, setOpenDeleteCardModal] = useState<boolean>(false);
   let [openUpdateCardModal, setOpenUpdateCardModal] = useState<boolean>(false);
   let [openBusinessDetailsModal, setOpenBusinessDetailsModal] = useState<boolean>(false);
-  let [cardId, setCardId] = useState<number>(0);
+  let [cardId, setCardId] = useState<string>("");
   let [cardTitle, setCardTitle] = useState<string>("");
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
-  let [favorites, setFavorites] = useState<number[]>([])
+  let [favorites, setFavorites] = useState<string[]>([])
   let render = () => setDataUpdated(!dataUpdated);
   let handleAddToFavorites = (card: Card) => {
-    if (favorites.includes(card.id as number)) {
-      removeFromFavorites(userInfo.userId, card.id as number)
+    if (favorites.includes(card._id as string)) {
+      addToFavorites(card._id as string)
         .then((res) => {
-          setFavorites(favorites.filter((id) => id !== card.id));
+          setFavorites(favorites.filter((id) => id !== card._id));
           successMsg(`${card.title} business card was removed from favorites!`);
-          render()
         })
         .catch((err) => { console.log(err); });
     } else {
-      addToFavorites(userInfo.userId, card)
+      addToFavorites(card._id as string)
         .then((res) => {
-          setFavorites([...favorites, card.id as number]);
+          setFavorites([...favorites, card._id as string]);
           successMsg(`${card.title} business card was added to favorites!`);
         })
         .catch((err) => { console.log(err); });
     }
   };
+  // let handleAddToFavorites = (card: Card) => {
+  //   if (favorites.includes(card._id as string)) {
+  //     removeFromFavorites(userInfo.userId, card._id as string)
+  //       .then((res) => {
+  //         setFavorites(favorites.filter((id) => id !== card._id));
+  //         successMsg(`${card.title} business card was removed from favorites!`);
+  //         render()
+  //       })
+  //       .catch((err) => { console.log(err); });
+  //   } else {
+  //     addToFavorites(userInfo.userId, card)
+  //       .then((res) => {
+  //         setFavorites([...favorites, card._id as string]);
+  //         successMsg(`${card.title} business card was added to favorites!`);
+  //       })
+  //       .catch((err) => { console.log(err); });
+  //   }
+  // };
   useEffect(() => {
     getFavorites(userInfo.userId).then((res) => {
-      let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
-      let defaultCardIds: number[] = userFavorites?.cards.map((card: any) => card.id) || [];
+      // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
+      let defaultCardIds: string[] = res.data?.cards.map((card: any) => card._id) || [];
+      // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
+      // let defaultCardIds: string[] = userFavorites?.cards.map((card: any) => card._id) || [];
       setFavorites(defaultCardIds)
     }).catch((err) => console.log(err))
   }, [dataUpdated, userInfo.userId]);
 
   useEffect(() => {
     getCards().then((res) => {
-      setCards(res.data.filter((card: Card) => favorites.includes(card.id as number)));
+      setCards(res.data.filter((card: Card) => favorites.includes(card._id as string)));
     }).catch((err) => console.log(err));
   }, [favorites]);
 
@@ -83,17 +102,17 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
           <div className="row">
             {cards.map((card: Card) => (
               <div
-                key={card.id}
+                key={card._id}
                 className="card col-md-4 mx-3 mt-4 shadow"
                 style={{ width: "18rem" }} >
                 <div className="cardImgDiv mt-3 rounded-3">
                   <img
-                    src={card.businessImgURL}
+                    src={card.businessImage.url}
                     className="card-img-top cardImg"
-                    alt={card.businessImgAlt}
+                    alt={card.businessImage.alt}
                     style={{ width: "16.5rem", height: "16.5rem" }}
                     onClick={() => {
-                      setCardId(card.id as number);
+                      setCardId(card._id as string);
                       setCardTitle(card.title);
                       setOpenBusinessDetailsModal(true);
                     }} />
@@ -112,7 +131,7 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
                             <Link to=""
                               className="btn col"
                               onClick={() => {
-                                setCardId(card.id as number);
+                                setCardId(card._id as string);
                                 setCardTitle(card.title);
                                 setOpenDeleteCardModal(true);
                               }} >
@@ -121,7 +140,7 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
                             <Link to=""
                               className="btn col"
                               onClick={() => {
-                                setCardId(card.id as number);
+                                setCardId(card._id as string);
                                 setCardTitle(card.title);
                                 setOpenUpdateCardModal(true);
                               }} >
@@ -135,7 +154,7 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
                           className="btn col" >
                           <i className="fa-solid fa-phone"></i>
                         </Link>
-                        {userInfo.email && (favorites.includes(card.id as number) ? (
+                        {userInfo.email && (favorites.includes(card._id as string) ? (
                           <Link to="" className="btn col text-danger" onClick={() => {
                             handleAddToFavorites(card);
                           }} >

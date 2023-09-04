@@ -1,6 +1,6 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import User from "../interfaces/User";
-import { getAllUsers, getUserByEmail } from "../services/usersService";
+import { getAllUsers, getUserById } from "../services/usersService";
 import { SiteTheme } from "../App";
 import { Link } from "react-router-dom";
 import UserProfileModal from "./UserProfileModal";
@@ -25,7 +25,8 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
   let [openDeleteUserModal, setOpenDeleteUserModal] = useState<boolean>(false);
   let [openLockUserModal, setOpenLockUserModal] = useState<boolean>(false);
   let [openChangeRoleModal, setOpenChangeRoleModal] = useState<boolean>(false);
-  let updateUserProfile = (userEmail: string) => getUserByEmail(userEmail).then((res) => { setUserProfile(res.data[0]); }).catch((err) => console.log(err))
+  let updateUserProfile = (userId: string) => getUserById(userId).then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
+  // let updateUserProfile = (userEmail: string) => getUserByEmail(userEmail).then((res) => { setUserProfile(res.data[0]); }).catch((err) => console.log(err))
 
   useEffect(() => {
     getAllUsers().then((res) => setUsers(res.data)).catch((err) => console.log((err)))
@@ -46,7 +47,7 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
         <table className={`table table-hover rounded ${darkMode ? "table-dark" : "table-secondary"}`} >
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">user_id</th>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Email</th>
@@ -57,15 +58,15 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
             </tr>
           </thead>
           <tbody>
-            {users.length ? (users.map((user: User) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
+            {users ? (users.map((user: User) => (
+              <tr key={user._id}>
+                <td>{user._id}</td>
+                <td>{user.name.firstName}</td>
+                <td>{user.name.lastName}</td>
                 <td>{user.email}</td>
                 <td>
                   {user.email === "admin1@test.com" ? (user.role) : (<Link to="" onClick={() => {
-                    updateUserProfile(user.email);
+                    updateUserProfile(user._id as string);
                     setOpenChangeRoleModal(true);
                   }}><i className="fa-solid fa-pen-to-square "
                   ></i> {user.role}</Link>)}
@@ -73,7 +74,7 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
                 <td>
                   <Link to="" className=""><i className="fa-solid fa-pen-to-square "
                     onClick={() => {
-                      updateUserProfile(user.email);
+                      updateUserProfile(user._id as string);
                       setOpenUserProfileModal(true);
                     }}
                   ></i> </Link>
@@ -82,11 +83,11 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
                   {(user.email === "admin1@test.com" || user.email === userInfo.email) ? (<small>Can't lock this user!</small>) : (
                     user.isActive ? (<i className="fa-solid fa-lock-open text-success"
                       onClick={() => {
-                        updateUserProfile(user.email);
+                        updateUserProfile(user._id as string);
                         setOpenLockUserModal(true)
                       }}
                     ></i>) : (<i className="fa-solid fa-lock text-danger" onClick={() => {
-                      updateUserProfile(user.email);
+                      updateUserProfile(user._id as string);
                       setOpenLockUserModal(true);
                     }}></i>)
                   )}
@@ -95,7 +96,7 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
                   {(user.email === "admin1@test.com" || user.email === userInfo.email) ? (<small>Do not delete!</small>) : (<Link to=""><i
                     className="fa-solid fa-trash text-secondary"
                     onClick={() => {
-                      updateUserProfile(user.email);
+                      updateUserProfile(user._id as string);
                       setOpenDeleteUserModal(true);
                     }}
                   ></i></Link>)}

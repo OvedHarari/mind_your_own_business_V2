@@ -7,7 +7,7 @@ interface UpdateCardModalProps {
   show: boolean;
   onHide: Function;
   render: Function;
-  cardId: number;
+  cardId: string;
   cardTitle: string;
 }
 

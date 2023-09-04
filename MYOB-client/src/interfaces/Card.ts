@@ -1,5 +1,5 @@
 export default interface Card {
-  id?: number;
+  _id?: string;
   owner?: string;
   title: string;
   subtitle?: string;
@@ -7,14 +7,18 @@ export default interface Card {
   phone: string;
   email: string;
   webSite: string;
-  businessImgURL?: string;
-  businessImgAlt?: string;
-  country: string;
-  state?: string;
-  city: string;
-  street: string;
-  houseNumber: string;
-  zipcode: string;
-  lat?:number;
-  lng?:number;
+  businessImage: {
+    url?: string;
+    alt?: string;
+  };
+  address: {
+    country: string;
+    state?: string;
+    city: string;
+    street: string;
+    houseNumber: string;
+    zipcode: string;
+    lat?: number;
+    lng?: number;
+  }
 }
