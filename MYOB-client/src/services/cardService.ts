@@ -24,5 +24,5 @@ export function updateCard(updatedCard: Card, _id: string) {
 }
 
 export function deleteCard(_id: string) {
-  return axios.delete(`${api}/${_id}`);
+  return axios.delete(`${api}/${_id}`, { headers: { Authorization: JSON.parse(sessionStorage.getItem("token") as string).token } });
 }

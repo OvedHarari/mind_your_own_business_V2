@@ -73,17 +73,9 @@ function App() {
   useEffect(() => {
     if (userInfo.userId) (getUserById(userInfo.userId).then((res) => {
       setUserProfile(res.data);
-
     }).catch((err) => console.log(err))
     )
-    // if (userInfo._id) (getUserProfile().then((res) => {
-    //   setUserProfile(res.data);
-    //   console.log(res);
 
-    // }).catch((err) => console.log(err))
-    // )
-
-    // let updateUserProfile = (userId: string) => getUserById(userId).then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
 
   }, [dataUpdated, userInfo]);
   return (

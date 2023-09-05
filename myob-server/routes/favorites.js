@@ -20,7 +20,7 @@ router.get("/:_id", auth, async (req, res) => {
     }
 })
 
-//Add to favorites
+//Add/Remove favorite cards
 router.post("/", auth, async (req, res) => {
     try {
         // 2. find user favorites

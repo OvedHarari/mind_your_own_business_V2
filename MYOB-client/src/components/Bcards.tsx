@@ -6,7 +6,7 @@ import { getCards } from "../services/cardService";
 import NewCardModal from "./NewCardModal";
 import DeleteCardModal from "./DeleteCardModal";
 import UpdateCardModal from "./UpdateCardModal";
-import { addToFavorites, getFavorites, removeFromFavorites } from "../services/favoritesService";
+import { addRemoveFavorites, getFavorites } from "../services/favoritesService";
 import { successMsg } from "../services/feedbacksService";
 import BusinessDetailsModal from "./BusinessDetailsModal";
 
@@ -28,7 +28,7 @@ const Bcards: FunctionComponent<BcardsProps> = ({ userInfo }) => {
   let render = () => setDataUpdated(!dataUpdated);
   let handleAddToFavorites = (card: Card) => {
     if (favorites.includes(card._id as string)) {
-      addToFavorites(card._id as string)
+      addRemoveFavorites(card._id as string)
         .then((res) => {
           // console.log(`before remove: ${favorites}`);
           setFavorites(favorites.filter((id) => id !== card._id));
@@ -38,7 +38,7 @@ const Bcards: FunctionComponent<BcardsProps> = ({ userInfo }) => {
         })
         .catch((err) => { console.log(err); });
     } else {
-      addToFavorites(card._id as string)
+      addRemoveFavorites(card._id as string)
         .then((res) => {
           // console.log(`before add: ${favorites}`);
 

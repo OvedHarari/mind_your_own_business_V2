@@ -21,11 +21,6 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
       address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "", },
       role: "casual", isActive: true
     },
-    // initialValues: {
-    //   firstName: "", middleName: "", lastName: "", phone: "", email: "", password: "", gender: "", userImgURL: "",
-    //   country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "",
-    //   role: "casual", isActive: true
-    // },
     validationSchema: yup.object({
       name: yup.object({ firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2) }),
       phone: yup.string().required().min(2), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), image: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(0), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2), }), role: yup.string().min(2),
@@ -44,7 +39,6 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
             gender: (getTokenDetailes() as any).gender
           }))
           setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
-          // createFavoritsById(res.data.id)
           successMsg(`${values.email} was registered and logged in`);
         })
         .catch((err) => {

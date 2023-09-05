@@ -75,8 +75,6 @@ const UpdateCard: FunctionComponent<UpdateCardProps> = ({ onHide, render, cardId
 
   useEffect(() => {
     getCardById(cardId).then((res) => setCard(res.data)).catch((err) => console.log(err))
-
-
   }, [cardId]);
 
   return (<div className={`container ${theme}`}  >

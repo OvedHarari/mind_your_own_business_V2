@@ -26,7 +26,6 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
   let [openLockUserModal, setOpenLockUserModal] = useState<boolean>(false);
   let [openChangeRoleModal, setOpenChangeRoleModal] = useState<boolean>(false);
   let updateUserProfile = (userId: string) => getUserById(userId).then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
-  // let updateUserProfile = (userEmail: string) => getUserByEmail(userEmail).then((res) => { setUserProfile(res.data[0]); }).catch((err) => console.log(err))
 
   useEffect(() => {
     getAllUsers().then((res) => setUsers(res.data)).catch((err) => console.log((err)))

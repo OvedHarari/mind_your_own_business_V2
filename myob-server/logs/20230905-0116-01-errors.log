@@ -1,0 +1,12 @@
+::1 - - [04/Sep/2023:18:23:14 +0000] "POST /api/cards/my-cards HTTP/1.1" 404 158
+::1 - - [04/Sep/2023:18:23:30 +0000] "PUT /api/cards/my-cards HTTP/1.1" 400 55
+::1 - - [04/Sep/2023:18:24:12 +0000] "GET /api/users/64eb35369e9fb2ba53d4537d HTTP/1.1" 400 12
+::1 - - [04/Sep/2023:18:33:34 +0000] "GET /api/users/64eb35369e9fb2ba53d4537d HTTP/1.1" 400 12
+::1 - - [04/Sep/2023:18:34:18 +0000] "GET /api/users/64eb35369e9fb2ba53d4537d HTTP/1.1" 400 12
+::1 - - [04/Sep/2023:18:37:09 +0000] "GET /api/cards/my-cards HTTP/1.1" 400 2
+::1 - - [04/Sep/2023:18:37:33 +0000] "GET /api/cards/my-cards HTTP/1.1" 400 2
+::1 - - [04/Sep/2023:18:37:48 +0000] "GET /api/cards/my-cards HTTP/1.1" 400 2
+::1 - - [04/Sep/2023:18:38:39 +0000] "GET /api/cards/my-cards HTTP/1.1" 400 39
+::1 - - [04/Sep/2023:18:38:55 +0000] "GET /api/cards/my-cards HTTP/1.1" 400 39
+::1 - - [04/Sep/2023:18:41:02 +0000] "GET /api/users/64eb35369e9fb2ba53d4537d HTTP/1.1" 400 12
+::1 - - [04/Sep/2023:18:41:22 +0000] "GET /api/users/64eb35369e9fb2ba53d4537d HTTP/1.1" 400 12

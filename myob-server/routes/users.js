@@ -7,6 +7,8 @@ const _ = require("lodash")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken");
 const Favorite = require("../models/Favorite");
+const chalk = require("chalk")
+
 
 
 //register

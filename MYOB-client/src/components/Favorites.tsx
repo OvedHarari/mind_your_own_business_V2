@@ -1,5 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { addToFavorites, getFavorites, removeFromFavorites } from "../services/favoritesService";
+import { addRemoveFavorites, getFavorites } from "../services/favoritesService";
 import { SiteTheme } from "../App";
 import Card from "../interfaces/Card";
 import { Link } from "react-router-dom";
@@ -27,14 +27,14 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
   let render = () => setDataUpdated(!dataUpdated);
   let handleAddToFavorites = (card: Card) => {
     if (favorites.includes(card._id as string)) {
-      addToFavorites(card._id as string)
+      addRemoveFavorites(card._id as string)
         .then((res) => {
           setFavorites(favorites.filter((id) => id !== card._id));
           successMsg(`${card.title} business card was removed from favorites!`);
         })
         .catch((err) => { console.log(err); });
     } else {
-      addToFavorites(card._id as string)
+      addRemoveFavorites(card._id as string)
         .then((res) => {
           setFavorites([...favorites, card._id as string]);
           successMsg(`${card.title} business card was added to favorites!`);
@@ -42,30 +42,10 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
         .catch((err) => { console.log(err); });
     }
   };
-  // let handleAddToFavorites = (card: Card) => {
-  //   if (favorites.includes(card._id as string)) {
-  //     removeFromFavorites(userInfo.userId, card._id as string)
-  //       .then((res) => {
-  //         setFavorites(favorites.filter((id) => id !== card._id));
-  //         successMsg(`${card.title} business card was removed from favorites!`);
-  //         render()
-  //       })
-  //       .catch((err) => { console.log(err); });
-  //   } else {
-  //     addToFavorites(userInfo.userId, card)
-  //       .then((res) => {
-  //         setFavorites([...favorites, card._id as string]);
-  //         successMsg(`${card.title} business card was added to favorites!`);
-  //       })
-  //       .catch((err) => { console.log(err); });
-  //   }
-  // };
+
   useEffect(() => {
     getFavorites(userInfo.userId).then((res) => {
-      // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
       let defaultCardIds: string[] = res.data?.cards.map((card: any) => card._id) || [];
-      // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
-      // let defaultCardIds: string[] = userFavorites?.cards.map((card: any) => card._id) || [];
       setFavorites(defaultCardIds)
     }).catch((err) => console.log(err))
   }, [dataUpdated, userInfo.userId]);
