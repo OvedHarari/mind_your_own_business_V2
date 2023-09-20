@@ -27,7 +27,6 @@ const BusinessDetailsModal: FunctionComponent<BusinessDetailsModalProps> = ({ sh
       <Modal.Header closeButton>
         <Modal.Title className="display-3">{`More About: ${cardTitle}`}</Modal.Title>
       </Modal.Header>
-
       <Modal.Body>
         <BusinessDetails onHide={onHide} cardId={cardId} />
       </Modal.Body>

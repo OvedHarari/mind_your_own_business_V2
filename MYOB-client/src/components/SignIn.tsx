@@ -9,10 +9,17 @@ interface SignInProps {
   setUserInfo: Function;
   passwordShown: boolean;
   togglePassword: Function;
+  setUsedGoogleSignIn: Function;
 }
 
-const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, togglePassword }) => {
+const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, togglePassword, setUsedGoogleSignIn }) => {
   let navigate = useNavigate();
+
+  const handleLogin = () => {
+    window.location.href = `${process.env.REACT_APP_API}/google-auth/auth/google`
+    setUsedGoogleSignIn(true)
+  };
+
   let formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: yup.object({
@@ -36,12 +43,8 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
           navigate("/");
         })
         .catch((err) => {
-          if (err.response.data === "Your User was blocked, please contact System Administrator") {
-            errorMsg(err.response.data);
-            console.log(err)
-          }
-          else
-            console.log(err)
+          errorMsg(err.response.data);
+          console.log(err)
         });
     },
   });
@@ -88,13 +91,21 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
             SignIn
           </button>
         </form>
+        <div>
+          <div className="d-flex justify-content-center mt-5">
+            <button type="button" className="google_btn" onClick={handleLogin}>
+              <img src="images/google.png" alt="google icon" />
+              <span>Sign in with Google</span>
+            </button>
+          </div>
+        </div>
         <div className="mt-3">
           <p>
             New User ? <br /> <Link to={"/signup"}>SignUp here!</Link>
           </p>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

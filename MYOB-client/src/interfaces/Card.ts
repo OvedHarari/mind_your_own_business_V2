@@ -21,4 +21,5 @@ export default interface Card {
     lat?: number;
     lng?: number;
   }
+  bizNumber: number
 }

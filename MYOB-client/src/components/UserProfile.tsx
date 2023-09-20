@@ -197,7 +197,7 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
                 <p className="text-danger">{formik.errors.address.zipcode}</p>)}
             </div>
           </div>
-          <button className="btn btn-secondary w-100 mt-3" type="submit">Save Changes</button>
+          <button className="btn btn-secondary w-100 mt-3" type="submit" disabled={!formik.isValid || !formik.dirty}>Save Changes</button>
         </form>
         <div className="col-6">
           <button className="btn btn-danger mt-3" onClick={() => { onHide(); setEditForm(true) }}>Close Without Saving</button>

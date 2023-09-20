@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SiteTheme } from "../App";
 import { successMsg } from "../services/feedbacksService";
 import UserProfileModal from "./UserProfileModal";
-import { getUserProfile } from "../services/usersService";
+import { getGooglSignOut, getUserProfile } from "../services/usersService";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -32,11 +32,16 @@ const Navbar: FunctionComponent<NavbarProps> = ({
   let [userProfileModal, setOpenUserProfileModal] = useState<boolean>(false)
   let navigate = useNavigate();
   let updateUserProfile = () => getUserProfile().then((res) => { setUserProfile(res.data); }).catch((err) => console.log(err))
-  let signOut = () => {
+
+  let signOut = async () => {
     sessionStorage.removeItem("userInfo");
     sessionStorage.removeItem("token");
     setUserInfo({ email: false, role: false });
     navigate("/");
+    getGooglSignOut().then((res) => { }).catch((err) => console.log(err)
+    )
+
+
     successMsg("See you soon 😉");
   };
   const defaultProfileImage = () => {
@@ -118,7 +123,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
                 </div>
                 {userInfo.email && (
                   <>
-                    <button className="btn btn-outline" onClick={signOut}>
+                    <button className="btn btn-outline" onClick={() => { signOut(); }}>
                       SignOut
                     </button>
                     <img src={userProfile && userProfile.userImgURL ? (`${userProfile.userImgURL}`) : (defaultProfileImage())}

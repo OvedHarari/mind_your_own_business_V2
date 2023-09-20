@@ -35,8 +35,8 @@ const LockUserModal: FunctionComponent<LockUserModalProps> = ({
         </Modal.Header>
         <Modal.Body>
           {isActive ? (<p>Are you sure you want to LOCK
-            <span className="fw-bold"> "{userProfile.firstName} {userProfile.lastName}"</span> ?</p>) : (<p>Are you sure you want to UNLOCK
-              <span className="fw-bold"> "{userProfile.firstName} {userProfile.lastName}"</span> ?</p>)}
+            <span className="fw-bold"> "{userProfile.name.firstName} {userProfile.name.lastName}"</span> ?</p>) : (<p>Are you sure you want to UNLOCK
+              <span className="fw-bold"> "{userProfile.name.firstName} {userProfile.name.lastName}"</span> ?</p>)}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -46,7 +46,7 @@ const LockUserModal: FunctionComponent<LockUserModalProps> = ({
                 .then((res) => {
                   render();
                   onHide();
-                  isActive ? (successMsg(`User ${userProfile.firstName} ${userProfile.lastName} was LOCKED !`)) : (successMsg(`User ${userProfile.firstName} ${userProfile.lastName} is now UNLOCKED!`))
+                  isActive ? (successMsg(`User ${userProfile.name.firstName} ${userProfile.name.lastName} was LOCKED !`)) : (successMsg(`User ${userProfile.name.firstName} ${userProfile.name.lastName} is now UNLOCKED!`))
                 })
                 .catch((err) => console.log(err))}>Yes</Button>
           <Button variant="secondary" onClick={() => onHide()}>

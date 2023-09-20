@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { addUser, getTokenDetailes } from "../services/usersService";
 import { errorMsg, successMsg } from "../services/feedbacksService";
 import User from "../interfaces/User";
-// import { createFavoritsById } from "../services/favoritesService";
 
 interface SignUpProps {
   setUserInfo: Function;
@@ -23,7 +22,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
     },
     validationSchema: yup.object({
       name: yup.object({ firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2) }),
-      phone: yup.string().required().min(2), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), image: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(0), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2), }), role: yup.string().min(2),
+      phone: yup.string().required().min(8), email: yup.string().required().email(), password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"), gender: yup.string().required(), image: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(0), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2), }), role: yup.string().min(2),
     }),
     onSubmit: async (values: User) => {
       addUser(values)
@@ -220,7 +219,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setUserInfo, passwordShown, to
             {formik.touched.role && formik.errors.role && (<p className="text-danger">{formik.errors.role}</p>)}
           </div>
         </div>
-        <button className="btn btn-secondary w-100 mt-3" type="submit">SignUp</button>
+        <button className="btn btn-secondary w-100 mt-3" type="submit" disabled={!formik.isValid || !formik.dirty}>SignUp</button>
       </form>
       <label className="form-check-label" htmlFor="form2Example3">
         Already signed up? <br />

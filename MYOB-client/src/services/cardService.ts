@@ -26,3 +26,16 @@ export function updateCard(updatedCard: Card, _id: string) {
 export function deleteCard(_id: string) {
   return axios.delete(`${api}/${_id}`, { headers: { Authorization: JSON.parse(sessionStorage.getItem("token") as string).token } });
 }
+
+// Update card properity 
+export async function updateCardProps(cardId: string, propName: any, newValue: any) {
+  try {
+    const propsObject: Record<string, any> = {
+      [propName]: newValue
+    };
+    return axios.patch(`${api}/${cardId}`, propsObject, { headers: { Authorization: JSON.parse(sessionStorage.getItem("token") as string).token } });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    return null;
+  }
+}

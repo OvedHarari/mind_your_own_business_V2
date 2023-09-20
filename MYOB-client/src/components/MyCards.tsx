@@ -27,12 +27,21 @@ const MyCards: FunctionComponent<MyCardsProps> = ({ userInfo }) => {
   let [favorites, setFavorites] = useState<string[]>([])
   let render = () => setDataUpdated(!dataUpdated);
   let handleAddToFavorites = (card: Card) => {
-    addRemoveFavorites(card._id as string)
-      .then((res) => {
-        setFavorites([...favorites, card._id as string]);
-        successMsg(`${card.title} business card was added to favorites!`);
-      })
-      .catch((err) => { console.log(err); });
+    if (favorites.includes(card._id as string)) {
+      addRemoveFavorites(card._id as string)
+        .then((res) => {
+          setFavorites(favorites.filter((id) => id !== card._id));
+          successMsg(`${card.title} business card was removed from favorites!`);
+        })
+        .catch((err) => { console.log(err); });
+    } else {
+      addRemoveFavorites(card._id as string)
+        .then((res) => {
+          setFavorites([...favorites, card._id as string]);
+          successMsg(`${card.title} business card was added to favorites!`);
+        })
+        .catch((err) => { console.log(err); });
+    }
   };
 
   useEffect(() => {

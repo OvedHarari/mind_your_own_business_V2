@@ -18,7 +18,15 @@ export function getAllUsers() {
 
 //User signIn
 export function userValidation(userTocheck: any) {
-  return axios.post(`${api}/login`, userTocheck);
+  return axios.post(`${api}/signin`, userTocheck);
+}
+//Get user after google signIn
+export function getGoogleUser() {
+  return axios.get(`${process.env.REACT_APP_API}/google-auth/login/success`, { withCredentials: true });
+}
+//Google signOut
+export function getGooglSignOut() {
+  return axios.get(`${process.env.REACT_APP_API}/google-auth/logout`);
 }
 
 //User Sign-up
@@ -58,4 +66,5 @@ export async function updateUserProps(userId: string, propName: any, newValue: a
     return null;
   }
 }
+
 

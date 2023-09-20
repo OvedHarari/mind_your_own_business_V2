@@ -48,6 +48,11 @@ const cardSchema = new mongoose.Schema({
         },
 
     },
+    bizNumber: {
+        type: Number,
+        required: false,
+    },
+
     address: {
         country: {
             type: String,

@@ -105,6 +105,16 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  loginAttempts: {
+    type: Number,
+    default: 0,
+    required: false
+  },
+  lastFailedLogin: {
+    type: Date,
+    default: null,
+    required: false
+  },
 
 })
 

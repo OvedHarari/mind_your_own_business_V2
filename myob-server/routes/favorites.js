@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const joi = require("joi");
 const auth = require("../middlewares/auth");
 const Favorite = require("../models/Favorite");
 const _ = require("lodash")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-
-
 
 //Get favorites
 router.get("/:_id", auth, async (req, res) => {
@@ -37,9 +32,6 @@ router.post("/", auth, async (req, res) => {
             let indexToDelete = favorites.cards.findIndex((fav) => fav._id == req.body._id)
             favorites.cards.splice(indexToDelete, 1);
             favorites.markModified("favorites");
-            // res.status(201).send("The card was removed from favorites.");
-
-
         } else {
             favorites.cards.push(req.body);
         }

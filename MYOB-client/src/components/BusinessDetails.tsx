@@ -3,6 +3,7 @@ import { getCardById } from "../services/cardService";
 import Card from "../interfaces/Card";
 import { Link } from "react-router-dom";
 import BusinessMap from "./BusinessMap";
+import UpdateBizNumberModal from "./UpdateBizNumberModal";
 
 interface BusinessDetailsProps {
     onHide: Function
@@ -10,18 +11,25 @@ interface BusinessDetailsProps {
 }
 
 const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, cardId }) => {
-
+    let [dataUpdated, setDataUpdated] = useState<boolean>(false);
+    let render = () => setDataUpdated(!dataUpdated);
+    let [openUpdateBizNumberModal, setOpenUpdateBizNumberModal] = useState<boolean>(false);
     let [card, setCard] = useState<Card>()
     useEffect(() => {
         if (cardId) {
             getCardById(cardId).then((res) => setCard(res.data))
                 .catch((err) => console.log(err))
         }
-    }, [cardId]);
+    }, [cardId, dataUpdated]);
 
     return (<>
         {card && (<div className="container">
             <div className="row">
+                <div className="col-lg-7">
+                    <h5>Business No. <Link to="" onClick={() => {
+                        setOpenUpdateBizNumberModal(true);
+                    }}>{card.bizNumber}</Link></h5>
+                </div>
                 <div className="col-lg-7">
                     {card.description}
                 </div>
@@ -34,7 +42,7 @@ const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, card
 
                 <div className="col-lg-5 mt-2 me-5">
                     <p>Phone: <Link to="">{card.phone}</Link> </p>
-                    <p>Website: <Link to="">{card.webSite}</Link></p>
+                    <p>Website: <Link to="">{card.webSite}</Link> </p>
                     <p>Contact Email: <Link to="">{card.email}</Link></p>
                     <p>Located At: <br /> {card.address.street} {card.address.houseNumber}, {card.address.city}, {card.address.country}, {card.address.zipcode} {card.address.state} </p>
                 </div>
@@ -46,6 +54,13 @@ const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, card
         </div>
         )
         }
+        <UpdateBizNumberModal
+            show={openUpdateBizNumberModal}
+            onHide={() => setOpenUpdateBizNumberModal(false)}
+            render={render}
+            cardId={cardId}
+            bizNumber={card?.bizNumber as number}
+        />
     </>);
 }
 

@@ -16,7 +16,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ onHide, render, userInfo }) 
 
   let formik = useFormik({
     initialValues: {
-      title: "", subtitle: "", description: "", phone: "", email: "", webSite: "", businessImage: { url: "", alt: "" }, address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "", lat: 0, lng: 0 }, owner: `${userInfo.email}`
+      title: "", subtitle: "", description: "", phone: "", email: "", webSite: "", businessImage: { url: "", alt: "" }, address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "", lat: 0, lng: 0 }, owner: `${userInfo.email}`, bizNumber: 0
     },
     validationSchema: yup.object({
       title: yup.string().required().min(2), subtitle: yup.string().required().min(2), description: yup.string().required().min(20),

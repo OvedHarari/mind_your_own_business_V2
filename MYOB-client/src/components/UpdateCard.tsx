@@ -35,12 +35,13 @@ const UpdateCard: FunctionComponent<UpdateCardProps> = ({ onHide, render, cardId
         houseNumber: "",
         zipcode: ""
       },
+      bizNumber: 0
 
     })
   let formik = useFormik({
     initialValues: {
       title: card.title, subtitle: card.subtitle, description: card.description, phone: card.phone, email: card.email, webSite: card.webSite, businessImage: ({ url: card.businessImage.url, alt: card.businessImage.alt }),
-      address: ({ country: card.address.country, state: card.address.state, city: card.address.city, street: card.address.street, houseNumber: card.address.houseNumber, zipcode: card.address.zipcode }), owner: card.owner
+      address: ({ country: card.address.country, state: card.address.state, city: card.address.city, street: card.address.street, houseNumber: card.address.houseNumber, zipcode: card.address.zipcode }), owner: card.owner, bizNumber: card.bizNumber
     },
     validationSchema: yup.object({
       title: yup.string().required().min(2), subtitle: yup.string().required().min(2), description: yup.string().required().min(20),
@@ -231,7 +232,7 @@ const UpdateCard: FunctionComponent<UpdateCardProps> = ({ onHide, render, cardId
             <p className="text-danger">{formik.errors.address.zipcode}</p>)}
         </div>
       </div>
-      <button className="btn btn-secondary w-100 mt-3" type="submit">Update Card</button>
+      <button className="btn btn-secondary w-100 mt-3" type="submit" disabled={!formik.isValid || !formik.dirty}>Update Card</button>
     </form>
     <div className="row">
       <div className="col-6">

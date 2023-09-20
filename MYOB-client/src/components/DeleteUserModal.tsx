@@ -33,7 +33,7 @@ const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to delete
-          <span className="fw-bold"> "{userProfile.firstName} {userProfile.lastName}"</span> ?
+          <span className="fw-bold"> "{userProfile.name.firstName} {userProfile.name.lastName}"</span> ?
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -43,7 +43,7 @@ const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
                 .then((res) => {
                   render();
                   onHide();
-                  successMsg(`The User of ${userProfile.firstName} ${userProfile.lastName} was deleted successfully!`);
+                  successMsg(`The User of ${userProfile.name.firstName} ${userProfile.name.lastName} was deleted successfully!`);
                 })
                 .catch((err) => console.log(err))}>Yes</Button>
           <Button variant="secondary" onClick={() => onHide()}>

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
@@ -12,6 +12,7 @@ import MyCards from "./components/MyCards";
 import Favorites from "./components/Favorites";
 import { getUserById } from "./services/usersService";
 import About from "./components/About";
+import GoogleAuth from "./components/GoogleAuth";
 
 const theme = {
   light: "light",
@@ -36,8 +37,6 @@ window.initMaps = () => {
   window.mapsApiLoadCallbacks.forEach(callback => callback());
 };
 
-
-
 const googleMapsScript = document.createElement("script");
 googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=initMaps`;
 document.head.appendChild(googleMapsScript);
@@ -52,6 +51,7 @@ function App() {
       : JSON.parse(sessionStorage.getItem("userInfo") as string)
   );
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
+  let [usedGoogleSignIn, setUsedGoogleSignIn] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated)
   let [userProfile, setUserProfile] = useState<any>({
     _id: 0,
@@ -71,11 +71,11 @@ function App() {
   };
 
   useEffect(() => {
-    if (userInfo.userId) (getUserById(userInfo.userId).then((res) => {
-      setUserProfile(res.data);
-    }).catch((err) => console.log(err))
-    )
-
+    if (userInfo.userId) {
+      getUserById(userInfo.userId).then((res) => {
+        setUserProfile(res.data);
+      }).catch((err) => console.log(err))
+    }
 
   }, [dataUpdated, userInfo]);
   return (
@@ -95,8 +95,9 @@ function App() {
             togglePassword={togglePassword}
           />
           <Routes>
+            <Route path="/google/success" element={<GoogleAuth setUserInfo={setUserInfo} />} />
             <Route path="/" element={<Bcards userInfo={userInfo} />} />
-            <Route path="/signin" element={<SignIn setUserInfo={setUserInfo} passwordShown={passwordShown} togglePassword={togglePassword} />} />
+            <Route path="/signin" element={<SignIn setUserInfo={setUserInfo} passwordShown={passwordShown} togglePassword={togglePassword} setUsedGoogleSignIn={setUsedGoogleSignIn} />} />
             <Route path="/signup" element={<SignUp setUserInfo={setUserInfo} passwordShown={passwordShown}
               togglePassword={togglePassword} />} />
             <Route path="/mycards" element={<MyCards userInfo={userInfo} />} />

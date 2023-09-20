@@ -87,7 +87,7 @@ const About: FunctionComponent<AboutProps> = ({ userInfo }) => {
       </p>
       <p>
         Feel free to reach out to our support team at{" "}
-        <a href="mailto:MYOB-Support@Test.com">MYOB-Support@Test.com</a>, and
+        <Link to="mailto:MYOB-Support@Test.com">MYOB-Support@Test.com</Link>, and
         we'll be more than happy to assist you.
       </p>
       <p className="mt-4">

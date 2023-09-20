@@ -14,7 +14,8 @@ interface BcardsProps {
   userInfo: any;
 }
 
-const Bcards: FunctionComponent<BcardsProps> = ({ userInfo }) => {
+const Bcards: FunctionComponent<BcardsProps> = ({ userInfo
+}) => {
   let theme = useContext(SiteTheme);
   let [cards, setCards] = useState<Card[]>([]);
   let [openNewCardModal, setOpenNewCardModal] = useState<boolean>(false);
@@ -30,45 +31,29 @@ const Bcards: FunctionComponent<BcardsProps> = ({ userInfo }) => {
     if (favorites.includes(card._id as string)) {
       addRemoveFavorites(card._id as string)
         .then((res) => {
-          // console.log(`before remove: ${favorites}`);
           setFavorites(favorites.filter((id) => id !== card._id));
-          // console.log(`after remove: ${favorites}`);
-
           successMsg(`${card.title} business card was removed from favorites!`);
         })
         .catch((err) => { console.log(err); });
     } else {
       addRemoveFavorites(card._id as string)
         .then((res) => {
-          // console.log(`before add: ${favorites}`);
-
           setFavorites([...favorites, card._id as string]);
-
           successMsg(`${card.title} business card was added to favorites!`);
-
         })
         .catch((err) => { console.log(err); });
     }
   };
+
   useEffect(() => {
     if (userInfo.userId) {
       getFavorites(userInfo.userId)
         .then((res) => {
-
-          // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
           let defaultCardIds: string[] = res.data?.cards.map((card: any) => card._id) || [];
-          // let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
-          // let defaultCardIds: string[] = userFavorites?.cards.map((card: any) => card._id) || [];
           setFavorites(defaultCardIds);
         })
         .catch((err) => console.log(err));
     }
-    // getFavorites(userInfo.userId).then((res) => {
-    //   let userFavorites = res.data.find((fav: any) => fav.userId === userInfo.userId);
-    //   let defaultCardIds: string[] = userFavorites?.cards.map((card: any) => card.id) || [];
-    //   setFavorites(defaultCardIds)
-    // }).catch((err) => console.log(err))
-
     getCards().then((res) => setCards(res.data)).catch((err) => console.log(err));
   }, [dataUpdated, userInfo.userId]);
 
