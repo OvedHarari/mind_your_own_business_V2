@@ -71,10 +71,10 @@ In this application, users can Sign up to the platform as casual or business use
 1. On the code editor - open a terminal and navigate to _"myob-server"_ folder root.
 2. Run 'npm install' to get all required node_modules for the backend functionality.
 3. DB connection -
-   - _a._ DB_LOCAL:
+   - DB_LOCAL:
    1. Restore all the collections available in folder _"MongoDB_Backup"_ to a DB named _"myob"_ on your local MongoDB env.
    2. Set the _"MongoDB Connection string"_ in _"myob-server\index.js"_ to use _"process.env.DB_LOCAL"_
-   - _"b."_ DB_ATLAS:
+   - DB_ATLAS:
    4. Set the _"MongoDB Connection string"_ in _"myob-server\index.js"_ to use _"process.env.DB_ATLAS"_
    5. Make sure that in _"myob-server\.env"_ you update your Atlas connection string of the Atlas db in _"DB_ATLAS"_.
 
