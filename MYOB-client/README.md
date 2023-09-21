@@ -1,12 +1,12 @@
 # Mind Your Own Business v2
 
-This project is a Full stack application that was writen on React-ts with node.js and designed with bootstrap and css .
+This project is a Full-stack application that was written on React-ts with node.js and designed with Bootstrap and CSS.
 
 ## Project Description
 
 The project is a second version of a platform that connects businesses with potential customers in a user-friendly way.
-The first version is a react-tylescript frontend project taht was converted to a full-stack project by adding node.js express backend.
-In this application, users can Sign up to platform as casual users or business users while Admin user can grant Admin permition to other users.
+The first version is a react-typescript frontend project that was converted to a full-stack project by adding node.js express backend.
+In this application, users can Sign up to the platform as casual or business users while Admin users can grant Admin permission to other users.
 
 ### Users for testing:
 
@@ -21,7 +21,7 @@ In this application, users can Sign up to platform as casual users or business u
 2. password validation regex on signup/login
 3. client form validation using formik with yup.
 4. server data validation using joi.
-5. user profile image conditionat renderin acording to gender (in case the user did not add image URL)
+5. user profile image conditional rendering acording to gender (in case the user did not add image URL)
 6. Dark\Light mode support and responsive display.
 7. Google Geocoder service upon new business card creation and\or update.
 8. Google Maps service on buliness details card marking business location.
