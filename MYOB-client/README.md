@@ -25,7 +25,7 @@ In this application, users can Sign up to platform as casual users or business u
 6. Dark\Light mode support and responsive display.
 7. Google Geocoder service upon new business card creation and\or update.
 8. Google Maps service on buliness details card marking business location.
-9. Google Auth for Sign-in using passport.
+9. Google Auth for Sign-in using passport (only after signing up).
 10. Server requests logger to Termenal + Daily log file for errors only.
 
 ### Casual users functionality:
@@ -74,7 +74,6 @@ In this application, users can Sign up to platform as casual users or business u
    - _a._ DB_LOCAL:
    1. Restore all the collections available in folder _"MongoDB_Backup"_ to a DB named _"myob"_ on your local MongoDB env.
    2. Set the _"MongoDB Connection string"_ in _"myob-server\index.js"_ to use _"process.env.DB_LOCAL"_
-   3. Make sure that in _"myob-server\.env"_ _"DB_ATLAS"_ is comment out and _"DB_LOCAL"_ is NOT comment out
    - _"b."_ DB_ATLAS:
    4. Set the _"MongoDB Connection string"_ in _"myob-server\index.js"_ to use _"process.env.DB_ATLAS"_
    5. Make sure that in _"myob-server\.env"_ you update your Atlas connection string of the Atlas db in _"DB_ATLAS"_.
@@ -85,6 +84,7 @@ In this application, users can Sign up to platform as casual users or business u
 2. REACT_APP_GOOGLE_MAPS_API_KEY="ADD_YOUR_GOOGLE_API_KEY"
 3. GOOGLE_CLIENT_SECRET = "REPLACE YITH YOUR GOOGLE_CLIENT_SECRET"
 
+- In case .env file does not exist, creae one in _"myob-server\"_ foot folder
 - If you cannot create your own accounts/keys, contact Oved Harari at [ovedhar@gmail.com] with a request and I will considure providing.
 
 ### Backend environment variables (.env)
@@ -99,6 +99,7 @@ In this application, users can Sign up to platform as casual users or business u
 8. CLIENT_URL = "http://localhost:3000"
 9. SERVER_URL = "http://localhost:8000"
 
+- In case .env file does not exist, creae one in _"myob-client\"_ foot folder
 - If you cannot create your own accounts/keys, contact Oved Harari at [ovedhar@gmail.com] with a request and I will considure providing.
 
 ### Starting the project
