@@ -51,7 +51,6 @@ function App() {
       : JSON.parse(sessionStorage.getItem("userInfo") as string)
   );
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
-  let [usedGoogleSignIn, setUsedGoogleSignIn] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated)
   let [userProfile, setUserProfile] = useState<any>({
     _id: 0,
@@ -63,6 +62,7 @@ function App() {
     gender: "",
     role: "",
     address: { country: "", state: "", city: "", street: "", houseNumber: "", zipcode: "" },
+    picture: "",
     isActive: ""
   })
   let [passwordShown, setPasswordShown] = useState(false);
@@ -72,12 +72,14 @@ function App() {
 
   useEffect(() => {
     if (userInfo.userId) {
-      getUserById(userInfo.userId).then((res) => {
-        setUserProfile(res.data);
-      }).catch((err) => console.log(err))
+      getUserById(userInfo.userId)
+        .then((res) => {
+          setUserProfile(res.data);
+        })
+        .catch((err) => console.log(err));
     }
-
   }, [dataUpdated, userInfo]);
+
   return (
     <SiteTheme.Provider value={darkMode ? theme.dark : theme.light}>
       <ToastContainer theme={`${darkMode ? "dark" : "light"}`} />
@@ -97,7 +99,7 @@ function App() {
           <Routes>
             <Route path="/google/success" element={<GoogleAuth setUserInfo={setUserInfo} />} />
             <Route path="/" element={<Bcards userInfo={userInfo} />} />
-            <Route path="/signin" element={<SignIn setUserInfo={setUserInfo} passwordShown={passwordShown} togglePassword={togglePassword} setUsedGoogleSignIn={setUsedGoogleSignIn} />} />
+            <Route path="/signin" element={<SignIn setUserInfo={setUserInfo} passwordShown={passwordShown} togglePassword={togglePassword} />} />
             <Route path="/signup" element={<SignUp setUserInfo={setUserInfo} passwordShown={passwordShown}
               togglePassword={togglePassword} />} />
             <Route path="/mycards" element={<MyCards userInfo={userInfo} />} />

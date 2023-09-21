@@ -41,13 +41,13 @@ router.get("/:_id", async (req, res) => {
 //Create Card - business\admin user only
 const cardSchema = joi.object({
     title: joi.string().required().min(2), subtitle: joi.string().required().min(2), description: joi.string().required().min(20),
-    phone: joi.string().required().min(2), email: joi.string().required().email(), webSite: joi.string().min(10), businessImage: joi.object({ url: joi.string().min(2), alt: joi.string().min(2) }), address: joi.object({ country: joi.string().required().min(2), state: joi.string().min(0), city: joi.string().required().min(2), street: joi.string().required().min(2), houseNumber: joi.string().required().min(1), zipcode: joi.string().min(2), lat: joi.number(), lng: joi.number() }), owner: joi.string().min(2), bizNumber: joi.number()
+    phone: joi.string().required().min(8), email: joi.string().required().email(), webSite: joi.string().min(10), businessImage: joi.object({ url: joi.string().min(2), alt: joi.string().min(2) }), address: joi.object({ country: joi.string().required().min(2), state: joi.string().min(0), city: joi.string().required().min(2), street: joi.string().required().min(2), houseNumber: joi.string().required().min(1), zipcode: joi.string().min(2), lat: joi.number(), lng: joi.number() }), owner: joi.string().min(2), bizNumber: joi.number()
 })
 
 
 const cardsPropsSchema = joi.object({
     title: joi.string().min(2), subtitle: joi.string().min(2), description: joi.string().min(20),
-    phone: joi.string().min(2), email: joi.string().email(), webSite: joi.string().min(10), businessImage: joi.object({ url: joi.string().min(2), alt: joi.string().min(2) }), address: joi.object({ country: joi.string().min(2), state: joi.string().min(0), city: joi.string().min(2), street: joi.string().min(2), houseNumber: joi.string().min(1), zipcode: joi.string().min(2), lat: joi.number(), lng: joi.number() }), owner: joi.string().min(2), bizNumber: joi.number().min(1000000).max(9999999)
+    phone: joi.string().min(8), email: joi.string().email(), webSite: joi.string().min(10), businessImage: joi.object({ url: joi.string().min(2), alt: joi.string().min(2) }), address: joi.object({ country: joi.string().min(2), state: joi.string().min(0), city: joi.string().min(2), street: joi.string().min(2), houseNumber: joi.string().min(1), zipcode: joi.string().min(2), lat: joi.number(), lng: joi.number() }), owner: joi.string().min(2), bizNumber: joi.number().min(1000000).max(9999999)
 })
 
 // Create Card - business\admin user only

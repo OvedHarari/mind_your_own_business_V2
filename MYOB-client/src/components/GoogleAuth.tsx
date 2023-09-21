@@ -20,7 +20,8 @@ const GoogleAuth: FunctionComponent<GoogleAuthProps> = ({ setUserInfo }) => {
                         email: (getTokenDetailes() as any).email,
                         userId: (getTokenDetailes() as any)._id,
                         role: (getTokenDetailes() as any).role,
-                        gender: (getTokenDetailes() as any).gender
+                        gender: (getTokenDetailes() as any).gender,
+                        picture: res.data.user._json.picture
                     }))
                     setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
                     navigate("/")

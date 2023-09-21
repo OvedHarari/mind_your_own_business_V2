@@ -9,15 +9,14 @@ interface SignInProps {
   setUserInfo: Function;
   passwordShown: boolean;
   togglePassword: Function;
-  setUsedGoogleSignIn: Function;
+
 }
 
-const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, togglePassword, setUsedGoogleSignIn }) => {
+const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, togglePassword }) => {
   let navigate = useNavigate();
 
   const handleLogin = () => {
     window.location.href = `${process.env.REACT_APP_API}/google-auth/auth/google`
-    setUsedGoogleSignIn(true)
   };
 
   let formik = useFormik({
@@ -51,7 +50,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
 
   return (
     <div className="container mt-5">
-      <h3 className="display-3 mt-3">SignIn</h3>
+      <h3 className="display-3 mt-3">Sign-in</h3>
       <div className="container box-shadow col-md-3 mt-5 ">
         <form className="signin" onSubmit={formik.handleSubmit}>
           <div className="form-floating mb-3">
@@ -88,7 +87,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
             type="submit"
             disabled={!formik.isValid || !formik.dirty}
           >
-            SignIn
+            Sign-in
           </button>
         </form>
         <div>
@@ -101,7 +100,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setUserInfo, passwordShown, to
         </div>
         <div className="mt-3">
           <p>
-            New User ? <br /> <Link to={"/signup"}>SignUp here!</Link>
+            New User ? <br /> <Link to={"/signup"}>Sign-up here!</Link>
           </p>
         </div>
       </div>

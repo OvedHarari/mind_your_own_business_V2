@@ -16,9 +16,6 @@ const userSchema = joi.object({
         lastName: joi.string().required().min(2),
     }),
     phone: joi.string().required().min(8),
-    //Israeli phone numbers:
-    // phone: joi.string().required().min(2).regex(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/),
-    // phone: joi.string().required().min(2).regex(/^\+?(972|0)(\-)?0?(([23489]{1}(\-)?\d{7})|[5]{1}\d{8})$/),
     email: joi.string().required().email(),
     password: joi.string().regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/),
     image: joi.object({ url: joi.string().min(0), alt: joi.string().min(0) }),
@@ -34,7 +31,6 @@ const userSchema = joi.object({
     }),
     isActive: joi.boolean().required(),
 });
-
 
 // SignUp
 router.post("/", async (req, res) => {
@@ -200,9 +196,7 @@ const userPropsSchema = joi.object({
     firstName: joi.string().min(2),
     middleName: joi.string().min(0),
     lastName: joi.string().min(2),
-    phone: joi.string().min(2).regex(/^\+?[1-9][0-9]{7,14}$/),
-    //Israeli phone numbers:
-    // phone: joi.string().min(2).regex(/^\+?(972|0)(\-)?0?(([23489]{1}(\-)?\d{7})|[5]{1}\d{8})$/), 
+    phone: joi.string().min(8),
     email: joi.string().email(),
     userImgURL: joi.string().min(0),
     gender: joi.string().min(2),

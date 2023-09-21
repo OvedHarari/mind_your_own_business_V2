@@ -110,15 +110,17 @@
         "url": "https://i.etsystatic.com/iap/e18ac2/3441183774/iap_640x640.3441183774_6t8nu8zv.jpg?version=0",
         "alt": "Emily's Art Gallery"
       },
-      "country": "United States",
-      "state": "New York",
-      "city": "New York City",
-      "street": "Art Avenue",
-      "houseNumber": "456",
-      "zipcode": "10001",
+      "address": {
+        "country": "United States",
+        "state": "New York",
+        "city": "New York City",
+        "street": "Art Avenue",
+        "houseNumber": "456",
+        "zipcode": "10001",
+        "lat": 40.7127753,
+        "lng": -74.0059728
+      },
       "owner": "business1@test.com",
-      "lat": 40.7127753,
-      "lng": -74.0059728,
       "id": 2
     },
     {
@@ -132,15 +134,17 @@
         "url": "https://s3-media0.fl.yelpcdn.com/bphoto/6ODu4ZPQ5hWkZW7PLKhmeQ/348s.jpg",
         "alt": "TechSmart Electronics"
       },
-      "country": "United States",
-      "state": "Texas",
-      "city": "Houston",
-      "street": "Tech Boulevard",
-      "houseNumber": "789",
-      "zipcode": "77001",
+      "address": {
+        "country": "United States",
+        "state": "Texas",
+        "city": "Houston",
+        "street": "Tech Boulevard",
+        "houseNumber": "789",
+        "zipcode": "77001",
+        "lat": 29.7604267,
+        "lng": -95.3698028
+      },
       "owner": "business1@test.com",
-      "lat": 29.7604267,
-      "lng": -95.3698028,
       "id": 3
     },
     {
@@ -154,15 +158,17 @@
         "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrAN7kIgR65kUAtP-Xz5fhZQvxj7tTb3OiHw&usqp=CAU",
         "alt": "Nature's Bounty"
       },
-      "country": "Canada",
-      "state": "Ontario",
-      "city": "Toronto",
-      "street": "Green Avenue",
-      "houseNumber": "789",
-      "zipcode": "M5V 2N8",
+      "address": {
+        "country": "Canada",
+        "state": "Ontario",
+        "city": "Toronto",
+        "street": "Green Avenue",
+        "houseNumber": "789",
+        "zipcode": "M5V 2N8",
+        "lat": 43.6889917,
+        "lng": -79.4130988
+      },
       "owner": "business1@test.com",
-      "lat": 43.6889917,
-      "lng": -79.4130988,
       "id": 4
     },
     {
@@ -176,15 +182,17 @@
         "url": "https://i1.sndcdn.com/avatars-000138933455-d3503o-t500x500.jpg",
         "alt": "FitZone Gym"
       },
-      "country": "United Kingdom",
-      "state": "England",
-      "city": "London",
-      "street": "Cherrydown Ave",
-      "houseNumber": "117",
-      "zipcode": "SW1A 1AA",
+      "address": {
+        "country": "United Kingdom",
+        "state": "England",
+        "city": "London",
+        "street": "Cherrydown Ave",
+        "houseNumber": "117",
+        "zipcode": "SW1A 1AA",
+        "lat": 51.6203594,
+        "lng": -0.0225743
+      },
       "owner": "business1@test.com",
-      "lat": 51.6203594,
-      "lng": -0.0225743,
       "id": 5
     },
     {
@@ -198,15 +206,17 @@
         "url": "https://yt3.googleusercontent.com/DVNjqdoTDQLu1PPT0zRjOQ62zLlTX7TXNqlcz3UVk3WFVOul0NVOmKYLkm2DbTfobCjMP3xT=s900-c-k-c0x00ffffff-no-rj",
         "alt": "Baker's Delight"
       },
-      "country": "Australia",
-      "state": "New South Wales",
-      "city": "Sydney",
-      "street": "Baker Street",
-      "houseNumber": "123",
-      "zipcode": "2000",
+      "address": {
+        "country": "Australia",
+        "state": "New South Wales",
+        "city": "Sydney",
+        "street": "Baker Street",
+        "houseNumber": "123",
+        "zipcode": "2000",
+        "lat": -33.9448376,
+        "lng": 151.2160121
+      },
       "owner": "admin1@test.com",
-      "lat": -33.9448376,
-      "lng": 151.2160121,
       "id": 6
     },
     {
@@ -220,15 +230,17 @@
         "url": "https://us1-photo.nextdoor.com/business_gallery/f0/91/f091acd228e1a1fc16365a02128bb0b9.png?request_version=v2&output_type=png&sizing=linear&x_size=3&y_size=3&resize_type=crop&density=1",
         "businessImgAlt": "Pet Paradise"
       },
-      "country": "Canada",
-      "state": "British Columbia",
-      "city": "Vancouver",
-      "street": "Pet Lane",
-      "houseNumber": "789",
-      "zipcode": "V6C 1A1",
+      "address": {
+        "country": "Canada",
+        "state": "British Columbia",
+        "city": "Vancouver",
+        "street": "Pet Lane",
+        "houseNumber": "789",
+        "zipcode": "V6C 1A1",
+        "lat": 49.2827291,
+        "lng": -123.1207375
+      },
       "owner": "ovedhar@gmail.com",
-      "lat": 49.2827291,
-      "lng": -123.1207375,
       "id": 7
     },
     {
@@ -242,15 +254,17 @@
         "url": "https://images.squarespace-cdn.com/content/v1/5dd59b818063ab0b2e3ac158/1575182631724-W990M321WVTJ3OF490RS/logo.png",
         "alt": "GreenThumb Nursery"
       },
-      "country": "United States",
-      "state": "Florida",
-      "city": "Miami",
-      "street": "Garden Road",
-      "houseNumber": "456 ",
-      "zipcode": "33101",
+      "address": {
+        "country": "United States",
+        "state": "Florida",
+        "city": "Miami",
+        "street": "Garden Road",
+        "houseNumber": "456 ",
+        "zipcode": "33101",
+        "lat": 25.9808128,
+        "lng": -80.2019383
+      },
       "owner": "ovedhar@gmail.com",
-      "lat": 25.9808128,
-      "lng": -80.2019383,
       "id": 8
     },
     {
@@ -264,15 +278,17 @@
         "url": "https://ih0.redbubble.net/image.2563527530.2062/raf,360x360,075,t,fafafa:ca443f4786.jpg",
         "alt": "Adventure Seekers"
       },
-      "country": "Australia",
-      "state": "Queensland",
-      "city": "Brisbane",
-      "street": "123 Adventure Avenue",
-      "houseNumber": "Suite 15",
-      "zipcode": "4000",
+      "address": {
+        "country": "Australia",
+        "state": "Queensland",
+        "city": "Brisbane",
+        "street": "123 Adventure Avenue",
+        "houseNumber": "Suite 15",
+        "zipcode": "4000",
+        "lat": -27.4704528,
+        "lng": 153.0260341
+      },
       "owner": "ovedhar@gmail.com",
-      "lat": -27.4704528,
-      "lng": 153.0260341,
       "id": 9
     },
     {
@@ -286,15 +302,17 @@
         "url": "https://blog.at-home.co.in/wp-content/uploads/2015/02/bookworm.png",
         "alt": "Bookworm Haven"
       },
-      "country": "United Kingdom",
-      "state": "Scotland",
-      "city": "Edinburgh",
-      "street": "Literary Lane",
-      "houseNumber": "789 ",
-      "zipcode": "EH1 1DH",
+      "address": {
+        "country": "United Kingdom",
+        "state": "Scotland",
+        "city": "Edinburgh",
+        "street": "Literary Lane",
+        "houseNumber": "789 ",
+        "zipcode": "EH1 1DH",
+        "lat": 55.953252,
+        "lng": -3.188267
+      },
       "owner": "ovedhar@gmail.com",
-      "lat": 55.953252,
-      "lng": -3.188267,
       "id": 10
     }
   ],

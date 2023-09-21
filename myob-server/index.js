@@ -16,7 +16,7 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 
 //MongoDB Connection string
-mongoose.connect(process.env.DB, { useNewUrlParser: true })
+mongoose.connect(process.env.DB_ATLAS, { useNewUrlParser: true })
     .then(() => console.log(chalk.blue("MongoDB connected successfully!!!")))
     .catch((err) => console.log((err)))
 

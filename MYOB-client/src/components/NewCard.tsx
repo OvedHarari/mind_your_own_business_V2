@@ -20,7 +20,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ onHide, render, userInfo }) 
     },
     validationSchema: yup.object({
       title: yup.string().required().min(2), subtitle: yup.string().required().min(2), description: yup.string().required().min(20),
-      phone: yup.string().required().min(2), email: yup.string().required().email(), webSite: yup.string().min(10), businessImage: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2) })
+      phone: yup.string().required().min(8), email: yup.string().required().email(), webSite: yup.string().min(10), businessImage: yup.object({ url: yup.string().min(2), alt: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(1), zipcode: yup.string().min(2) })
     }),
 
     onSubmit(values: Card) {

@@ -18,18 +18,21 @@ const UserProfileModal: FunctionComponent<UserProfileModalProps> = ({ show, onHi
   let theme = useContext(SiteTheme);
   let [editForm, setEditForm] = useState<boolean>(true)
   const defaultProfileImage = () => {
-    if (userProfile && userProfile.gender) {
-      switch (userProfile.gender) {
-        case "male":
-          return "images/users_img/user_male.webp";
-        case "female":
-          return "images/users_img/user_female.webp";
-        case "other":
-          return "images/users_img/user_other.jpg";
-        default:
-          break;
+    if (userInfo.picture) {
+      return userInfo.picture
+    } else
+      if (userProfile.gender) {
+        switch (userProfile.gender) {
+          case "male":
+            return "images/users_img/user_male.webp";
+          case "female":
+            return "images/users_img/user_female.webp";
+          case "other":
+            return "images/users_img/user_other.jpg";
+          default:
+            break;
+        }
       }
-    }
     return "images/users_img/user_male.webp";
   };
 
