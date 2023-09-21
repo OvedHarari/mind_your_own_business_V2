@@ -13,20 +13,17 @@ interface UserProfileProps {
   editForm: boolean;
   setEditForm: Function;
   render: Function;
-  togglePassword: Function;
-  passwordShown: boolean;
 }
-const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile, editForm, setEditForm, render, togglePassword, passwordShown }) => {
+const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile, editForm, setEditForm, render }) => {
   let formik = useFormik({
     initialValues: {
       name: { firstName: userProfile.name.firstName, middleName: userProfile.name.middleName, lastName: userProfile.name.lastName }, phone: userProfile.phone, email: userProfile.email,
-      // password: userProfile.password,
       gender: userProfile.gender, image: { url: userProfile.image.url }, address: { country: userProfile.address.country, state: userProfile.address.state, city: userProfile.address.city, street: userProfile.address.street, houseNumber: userProfile.address.houseNumber, zipcode: userProfile.address.zipcode }, role: userProfile.role, isActive: userProfile.isActive
     },
     validationSchema: yup.object({
       name: yup.object({ firstName: yup.string().required().min(2), middleName: yup.string().min(2), lastName: yup.string().required().min(2) }),
       phone: yup.string().required().min(2), email: yup.string().required().email(),
-      // password: yup.string().required().min(8).matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%#^*?&]{8,}$/, "Password must contain at least 1 uppercase letter, lowercase letter, digit and special character (@$!%*?&#^)"),
+
       gender: yup.string().required(), image: yup.object({ url: yup.string().min(2) }), address: yup.object({ country: yup.string().required().min(2), state: yup.string().min(2), city: yup.string().required().min(2), street: yup.string().required().min(2), houseNumber: yup.string().required().min(2), zipcode: yup.string().min(2) }), role: yup.string().min(2)
     }),
     enableReinitialize: true,
@@ -95,18 +92,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ onHide, userProfile,
               <label htmlFor="floatingEmail">Email address *</label>
               {formik.touched.email && formik.errors.email && (<p className="text-danger">{formik.errors.email}</p>)}
             </div>
-            {/* <div className="form-floating col-6">
-              <input type={passwordShown ? "text" : "password"} className="form-control border-secondary" id="floatingPassword" placeholder="Password"
-                name="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                onBlur={formik.handleBlur} disabled={editForm}></input>
-              <div className="passIcon">
-                {passwordShown ? <i className="fa-solid fa-eye-slash passIcon" onClick={() => togglePassword(!passwordShown)}></i> : <i className="fa-solid fa-eye passIcon" onClick={() => togglePassword(!passwordShown)}></i>}
-              </div>
-              <label htmlFor="floatingPassword">Password *</label>
-              {formik.touched.password && formik.errors.password && (<p className="text-danger">{formik.errors.password}</p>)}
-            </div> */}
           </div>
           <h6 className="mt-4 text-start">Gander / Image</h6>
           <div className="row g-2 border rounded-4 border-secondary mt-1">

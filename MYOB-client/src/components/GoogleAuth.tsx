@@ -25,14 +25,13 @@ const GoogleAuth: FunctionComponent<GoogleAuthProps> = ({ setUserInfo }) => {
                     }))
                     setUserInfo(JSON.parse(sessionStorage.getItem("userInfo") as string));
                     navigate("/")
-
                 }
             }
             ).catch((err) => console.log((err))
             );
         }
         setGoogleAuthUser();
-    }, []);
+    }, [navigate, setUserInfo]);
     return (<></>);
 }
 

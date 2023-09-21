@@ -10,11 +10,9 @@ interface UserProfileModalProps {
   userProfile: any;
   setUserProfile: Function;
   render: Function;
-  passwordShown: boolean;
-  togglePassword: Function;
 }
 
-const UserProfileModal: FunctionComponent<UserProfileModalProps> = ({ show, onHide, userInfo, userProfile, setUserProfile, render, passwordShown, togglePassword }) => {
+const UserProfileModal: FunctionComponent<UserProfileModalProps> = ({ show, onHide, userInfo, userProfile, setUserProfile, render }) => {
   let theme = useContext(SiteTheme);
   let [editForm, setEditForm] = useState<boolean>(true)
   const defaultProfileImage = () => {
@@ -74,8 +72,6 @@ const UserProfileModal: FunctionComponent<UserProfileModalProps> = ({ show, onHi
           editForm={editForm}
           setEditForm={setEditForm}
           render={render}
-          passwordShown={passwordShown}
-          togglePassword={togglePassword}
         />
       </Modal.Body>
     </Modal>

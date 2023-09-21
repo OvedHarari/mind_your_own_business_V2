@@ -116,8 +116,6 @@ const UsersManagement: FunctionComponent<UsersManagementProps> = ({ darkMode, re
       userInfo={userInfo}
       userProfile={userProfile}
       setUserProfile={setUserProfile}
-      togglePassword={togglePassword}
-      passwordShown={passwordShown}
     />
     <DeleteUserModal
       show={openDeleteUserModal}

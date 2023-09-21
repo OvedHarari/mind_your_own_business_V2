@@ -159,9 +159,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
         render={render}
         userInfo={userInfo}
         userProfile={userProfile}
-        setUserProfile={setUserProfile}
-        togglePassword={togglePassword}
-        passwordShown={passwordShown} />
+        setUserProfile={setUserProfile} />
     </>
   );
 };
