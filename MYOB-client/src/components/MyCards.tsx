@@ -180,6 +180,7 @@ const MyCards: FunctionComponent<MyCardsProps> = ({ userInfo }) => {
         onHide={() => setOpenBusinessDetailsModal(false)}
         cardId={cardId}
         cardTitle={cardTitle}
+        userInfo={userInfo}
       />
     </div>
   );

@@ -191,6 +191,7 @@ const Bcards: FunctionComponent<BcardsProps> = ({ userInfo
         onHide={() => setOpenBusinessDetailsModal(false)}
         cardId={cardId}
         cardTitle={cardTitle}
+        userInfo={userInfo}
       />
     </div>
   );

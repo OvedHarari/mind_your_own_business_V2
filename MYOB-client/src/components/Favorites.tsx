@@ -181,6 +181,7 @@ const Favorites: FunctionComponent<FavoritesProps> = ({ userInfo }) => {
         onHide={() => setOpenBusinessDetailsModal(false)}
         cardId={cardId}
         cardTitle={cardTitle}
+        userInfo={userInfo}
       />
     </div>
   );

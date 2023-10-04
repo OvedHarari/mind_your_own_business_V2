@@ -9,8 +9,9 @@ interface BusinessDetailsModalProps {
   onHide: Function;
   cardId: string;
   cardTitle: string;
+  userInfo: any;
 }
-const BusinessDetailsModal: FunctionComponent<BusinessDetailsModalProps> = ({ show, onHide, cardId, cardTitle }) => {
+const BusinessDetailsModal: FunctionComponent<BusinessDetailsModalProps> = ({ show, onHide, cardId, cardTitle, userInfo }) => {
   let theme = useContext(SiteTheme);
 
   return (<div
@@ -28,7 +29,7 @@ const BusinessDetailsModal: FunctionComponent<BusinessDetailsModalProps> = ({ sh
         <Modal.Title className="display-3">{`More About: ${cardTitle}`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <BusinessDetails onHide={onHide} cardId={cardId} />
+        <BusinessDetails onHide={onHide} cardId={cardId} userInfo={userInfo} />
       </Modal.Body>
     </Modal>
   </div>);

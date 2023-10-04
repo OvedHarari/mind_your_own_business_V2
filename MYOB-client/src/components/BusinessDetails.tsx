@@ -8,9 +8,10 @@ import UpdateBizNumberModal from "./UpdateBizNumberModal";
 interface BusinessDetailsProps {
     onHide: Function
     cardId: string;
+    userInfo: any;
 }
 
-const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, cardId }) => {
+const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, cardId, userInfo }) => {
     let [dataUpdated, setDataUpdated] = useState<boolean>(false);
     let render = () => setDataUpdated(!dataUpdated);
     let [openUpdateBizNumberModal, setOpenUpdateBizNumberModal] = useState<boolean>(false);
@@ -26,9 +27,11 @@ const BusinessDetails: FunctionComponent<BusinessDetailsProps> = ({ onHide, card
         {card && (<div className="container">
             <div className="row">
                 <div className="col-lg-7">
-                    <h5>Business No. <Link to="" onClick={() => {
-                        setOpenUpdateBizNumberModal(true);
-                    }}>{card.bizNumber}</Link></h5>
+                    <h5>Business No. {(userInfo.role === "admin") ? (
+                        <Link to="" onClick={() => {
+                            setOpenUpdateBizNumberModal(true);
+                        }}>{card.bizNumber}</Link>
+                    ) : (card.bizNumber)}</h5>
                 </div>
                 <div className="col-lg-7">
                     {card.description}
